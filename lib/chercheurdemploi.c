@@ -31,10 +31,10 @@ void Supprimer_profil()
 
 void Recherche_par_poste()
 {
-    return
+    return;
 }
 
 void Rechercher_par_anciencollegue()
 {
-
+    return;
 }

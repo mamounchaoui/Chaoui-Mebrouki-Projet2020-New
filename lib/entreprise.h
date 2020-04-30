@@ -1,7 +1,4 @@
 #pragma once
-
-#include "liste.h"
-
 #include <stdbool.h>
 #include <stdio.h>
 

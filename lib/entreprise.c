@@ -1,6 +1,5 @@
 #include "entreprise.h"
 #include <stdlib.h>
-#include "liste.h"
 #include <string.h>
 #include <stdbool.h>
 #include <stdio.h>
@@ -12,7 +11,7 @@ void creer_profil_entreprise(FILE* fic, entreprise* ent)
 }
 
 
-void supprimer_entreprise(FILE* fic, entreprise* ent)
+void supprimer_entreprise(FILE* fic, char* nom_ent)
 {
     return ;
 }
