@@ -40,20 +40,21 @@ void segfault_sigaction(int signal, siginfo_t *si, void *arg)
 int main()
 {
      FILE *db1 = fopen("test/chercheurdemploi.csv", "r");
-     FILE *db2 = fopen("test/employe.csv", "r");
-     FILE *db3 = fopen("test/poste.csv", "r");
+     FILE *db3 = fopen("test/employe.csv", "r");
      FILE *db4 = fopen("test/entreprise.csv", "r");
+     FILE *db5 = fopen("test/poste.csv", "r");
      // tests pour 'entreprise'
 
      // // tests pour 'chercheurdemploi'
      // tests nbrligne
 
      TEST(nbrligne(db1) == 4);
-     TEST(nbrligne(db2) == 4);
-     TEST(nbrligne(db3) == 5);
+     TEST(nbrligne(db3) == 4);
      TEST(nbrligne(db4) == 5);
+     TEST(nbrligne(db5) == 5);
 
-     // tests Creer_profil
+     // // tests Creer_profil
+     {
      int a;
      char nom[128]="Balança";
      char prenom[128]="Maxime";
@@ -64,6 +65,7 @@ int main()
      char str[128];
      char* v1,*v2,*v3,*v4,*v5,*v6,*v7;
      Creer_profil(nom, prenom, mail, code_postal, competence, ancien_collegue);
+     
      a=nbrligne(db1);
      fseek(db1,0,SEEK_SET);
      fscanf(db1,"%*s");
@@ -87,12 +89,115 @@ int main()
      TEST(strcmp(v5, "33003") == 0);
      TEST(strcmp(v6, "theatre") == 0);
      TEST(strcmp(v7, "1") == 0);
+     fclose(db1);
+     }
+
+     // test de Supprimer_profil()
+     {
+     char n[128]="Dupont";
+     char p[128]="Michel";
+     char str[128];
+     char* w1,*w2;
+     int b;
+     
+     Supprimer_profil(n, p);
+     FILE *db2 = fopen("test/chercheurdemploi.csv", "r");
+
+     b=nbrligne(db2);
+     fseek(db2,0,SEEK_SET);
+     fscanf(db2,"%*s");
+     for (int i = 0; i < b-1; i++)
+     {
+          fscanf(db2,"%s",str);
+          w1=strtok(str,",");
+          w1=strtok(NULL,",");
+          w2=strtok(NULL,",");
+          TEST(strcmp(w1, "Dupont") != 0);
+          TEST(strcmp(w2, "Michel") != 0);
+     }
+     fclose(db2);
+
+     char n1[128]="Devathaire";
+     char p1[128]="Emannuel";
+
+     Supprimer_profil(n1, p1);
+     FILE *db6 = fopen("test/chercheurdemploi.csv", "r");
+
+     b=nbrligne(db6);
+     fseek(db6,0,SEEK_SET);
+     fscanf(db6,"%*s");
+     for (int i = 0; i < b-1; i++)
+     {
+          fscanf(db6,"%s",str);
+          w1=strtok(str,",");
+          w1=strtok(NULL,",");
+          w2=strtok(NULL,",");
+          TEST(strcmp(w1, "Devathaire") != 0);
+          TEST(strcmp(w2, "Emannuel") != 0);
+     }
+     fclose(db6);
+     }
+
+     // tests de Tronsitionner_profil
+     {
+     int c ,d;
+     char n2[128]="Defritsh";
+     char p2[128]="Gaetan";
+     char entrep[128]="Disney";
+     char* w1,*w2,*w3,*w4,*w5,*w6,*w7,*w8;
+     char str[128];
+
+     Transitionner_profil(n2, p2, entrep);
+
+     FILE *db7 = fopen("test/chercheurdemploi.csv", "r");
+     FILE *db8 = fopen("test/employe.csv", "r");
+     c=nbrligne(db7);
+     d=nbrligne(db8);
+     fseek(db7,0,SEEK_SET);
+     fseek(db8,0,SEEK_SET);
+
+     fscanf(db7,"%*s");
+     for (int i = 0; i < c-1; i++)
+     {
+          fscanf(db7,"%s",str);
+          w1=strtok(str,",");
+          w1=strtok(NULL,",");
+          w2=strtok(NULL,",");
+          TEST(strcmp(w1, "Defritsh") != 0);
+          TEST(strcmp(w2, "Gaetan") != 0);
+     }
+
+     fscanf(db8,"%*s");
+     for (int i = 0; i <=d+1; i++)
+     {
+          fscanf(db8,"%s",str);
+     }
+     w1=strtok(str,",");
+     w2=strtok(NULL,",");
+     w3=strtok(NULL,",");
+     w4=strtok(NULL,",");
+     w5=strtok(NULL,",");
+     w6=strtok(NULL,",");
+     w7=strtok(NULL,",");
+     w8=strtok(NULL,",");
+
+     TEST(strcmp(w1, "4") == 0);
+     TEST(strcmp(w2, "Defritsh") == 0);
+     TEST(strcmp(w3, "Gaetan") == 0);
+     TEST(strcmp(w4, "defgaetan98@hotmail.fr") == 0);
+     TEST(strcmp(w5, "33003") == 0);
+     TEST(strcmp(w6, "theatre") == 0);
+     TEST(strcmp(w7, "3") == 0);
+     TEST(strcmp(w8, "1") == 0);
+     fclose(db7);
+     fclose(db8);
+     }
      // tests pour 'employe'
 
-     fclose(db1);
-     fclose(db2);
-     fclose(db3);
-     fclose(db4);
+     
+     // fclose(db3);
+     // fclose(db4);
+     // fclose(db5);
 
      printf("%d/%d\n", tests_reussis, tests_executes);
 
