@@ -92,7 +92,87 @@ int main()
      fclose(db1);
      }
 
-     // test de Supprimer_profil()
+     // test de Modifier_profil
+     {
+          int x,y,z;
+          char n3[128]="Dupont";
+          char p3[128]="Michel";
+          char n4[128]="Devathaire";
+          char p4[128]="Emannuel";
+          char n5[128]="Defritsh";
+          char p5[128]="Gaetan";
+          char compe[128]="Java";
+          char col[128]="Bartaire,Adrien";
+          char code[128]="12345";
+          char str[128];
+          char* x1,*x2,*x3,*x4,*x5,*x6,*x7;
+          // 1-Ajouter des compétences
+          // 2-Ajouter un(e) ancien(ne) collègue de travail
+          // 3-Modifier le code postal
+          x=1;
+          y=2;
+          z=3;
+
+          Modifier_profil(n3, p3, compe, col, code, z);
+          Modifier_profil(n4, p4, compe, col, code, x);
+          Modifier_profil(n5, p5, compe, col, code, y);
+          FILE *db9 = fopen("test/chercheurdemploi.csv", "r");
+
+          fscanf(db9,"%*s");
+          fscanf(db9,"%s",str);
+          x1=strtok(str,",");
+          x2=strtok(NULL,",");
+          x3=strtok(NULL,",");
+          x4=strtok(NULL,",");
+          x5=strtok(NULL,",");
+          x6=strtok(NULL,",");
+          x7=strtok(NULL,",");
+          
+          TEST(strcmp(x1, "1") == 0);
+          TEST(strcmp(x2, "Dupont") == 0);
+          TEST(strcmp(x3, "Michel") == 0);
+          TEST(strcmp(x4, "dup.michel@gmail.com") == 0);
+          TEST(strcmp(x5, "12345") == 0);
+          TEST(strcmp(x6, "bureatique") == 0);
+          TEST(strcmp(x7, "2;1") == 0);
+
+          fscanf(db9,"%s",str);
+          x1=strtok(str,",");
+          x2=strtok(NULL,",");
+          x3=strtok(NULL,",");
+          x4=strtok(NULL,",");
+          x5=strtok(NULL,",");
+          x6=strtok(NULL,",");
+          x7=strtok(NULL,",");
+          
+          TEST(strcmp(x1, "2") == 0);
+          TEST(strcmp(x2, "Devathaire") == 0);
+          TEST(strcmp(x3, "Emannuel") == 0);
+          TEST(strcmp(x4, "eannueldev@yahoo.fr") == 0);
+          TEST(strcmp(x5, "13005") == 0);
+          TEST(strcmp(x6, "CSS;HTML;JS;Java") == 0);
+          TEST(strcmp(x7, "1") == 0);
+
+          fscanf(db9,"%s",str);
+          x1=strtok(str,",");
+          x2=strtok(NULL,",");
+          x3=strtok(NULL,",");
+          x4=strtok(NULL,",");
+          x5=strtok(NULL,",");
+          x6=strtok(NULL,",");
+          x7=strtok(NULL,",");
+          // 3,Defritsh,Gaetan,defgaetan98@hotmail.fr,33003,theatre,3
+          TEST(strcmp(x1, "3") == 0);
+          TEST(strcmp(x2, "Defritsh") == 0);
+          TEST(strcmp(x3, "Gaetan") == 0);
+          TEST(strcmp(x4, "defgaetan98@hotmail.fr") == 0);
+          TEST(strcmp(x5, "33003") == 0);
+          TEST(strcmp(x6, "theatre") == 0);
+          TEST(strcmp(x7, "3;1") == 0);
+          fclose(db9);
+     }
+     
+     // test de Supprimer_profil
      {
      char n[128]="Dupont";
      char p[128]="Michel";
@@ -138,7 +218,7 @@ int main()
      fclose(db6);
      }
 
-     // tests de Tronsitionner_profil
+     // tests de Transitionner_profil
      {
      int c ,d;
      char n2[128]="Defritsh";
@@ -187,19 +267,103 @@ int main()
      TEST(strcmp(w4, "defgaetan98@hotmail.fr") == 0);
      TEST(strcmp(w5, "33003") == 0);
      TEST(strcmp(w6, "theatre") == 0);
-     TEST(strcmp(w7, "3") == 0);
+     TEST(strcmp(w7, "3;1") == 0);
      TEST(strcmp(w8, "1") == 0);
      fclose(db7);
      fclose(db8);
      }
+
+     
+     {
+
+          char nom[128]="Dupont";
+          char prenom[128]="Emannuel";
+          char mail[128]="dup.michel@gmail.com";
+          char code_postal[128]="67940";
+          char competence[128]="bureatique";
+          char ancien_collegue[128]="Buisson,Hugo";
+
+          char nom1[128]="Devathaire";
+          char prenom1[128]="Michel";
+          char mail1[128]="eannueldev@yahoo.fr";
+          char code_postal1[128]="13005";
+          char competence1[128]="CSS;HTML;JS";
+          char ancien_collegue1[128]="Bartaire,Adrien";
+          // 3,Defritsh,Gaetan,defgaetan98@hotmail.fr,33003,theatre,3
+          char nom2[128]="Defritsh";
+          char prenom2[128]="Gaetan";
+          char mail2[128]="defgaetan98@hotmail.fr";
+          char code_postal2[128]="77700";
+          char competence2[128]="theatre;comedie";
+          char ancien_collegue2[128]="Bouvier,Rodolphe";
+          Creer_profil(nom, prenom, mail, code_postal, competence, ancien_collegue);
+          Creer_profil(nom1, prenom1, mail1, code_postal1, competence1, ancien_collegue1);
+          Creer_profil(nom2, prenom2, mail2, code_postal2, competence2, ancien_collegue2);
+     }
+
+     // test Recherche_par_poste
+     {
+          char nom[128]="Dupont";
+          char prenom[128]="Michel";
+          int a,b;
+          a=1;
+          b=2;
+
+     Recherche_par_poste(nom, prenom, a);
+     // résultat obtenu:aucun résultat obtenu (résultat voulu)
+
+     char nom1[128]="Devathaire";
+     char prenom1[128]="Emannuel";
+     Recherche_par_poste(nom1, prenom1, a);
+     // résultat obtenu:aucun résultat obtenu (corresspont au résultat voulu)
+
+     char nom2[128]="Defritsh";
+     char prenom2[128]="Gaetan";
+     Recherche_par_poste(nom2, prenom2, a);
+     // résultat obtenu: (corresspont au résultat voulu)
+     // Voici le(s) résultat(s) de votre recherche
+     // le titre du poste est:acteur
+     // le nom de l'entreprise:Disney
+     // l'adresse mail de l'entreprise est:walt@disney.com
+     // le code postal de l'entreprise est:77700
+     // ---------------------------------------
+     // le titre du poste est:comedien
+     // le nom de l'entreprise:Twitter
+     // l'adresse mail de l'entreprise est:emps@google.com
+     // le code postal de l'entreprise est:75029
+     // ---------------------------------------
+     // le titre du poste est:humouriste
+     // le nom de l'entreprise:Comedieclub
+     // l'adresse mail de l'entreprise est:comclub@yahoo.fr
+     // le code postal de l'entreprise est:77700
+     // ---------------------------------------
+
+     Recherche_par_poste(nom2, prenom2, b);
+     // résultat obtenu: (corresspont au résultat voulu)
+     // Voici le(s) résultat(s) de votre recherche
+     // le titre du poste est:acteur
+     // le nom de l'entreprise:Disney
+     // l'adresse mail de l'entreprise est:walt@disney.com
+     // le code postal de l'entreprise est:77700
+     // ---------------------------------------
+     // le titre du poste est:humouriste
+     // le nom de l'entreprise:Comedieclub
+     // l'adresse mail de l'entreprise est:comclub@yahoo.fr
+     // le code postal de l'entreprise est:77700
+     // ---------------------------------------
+     Recherche_par_poste(nom, prenom, b);
+     // résultat obtenu: (corresspont au résultat voulu)
+     // résultat obtenu:aucun résultat obtenu (corresspont au résultat voulu)
+     }
      // tests pour 'employe'
 
      
-     // fclose(db3);
-     // fclose(db4);
-     // fclose(db5);
+     fclose(db3);
+     fclose(db4);
+     fclose(db5);
 
      printf("%d/%d\n", tests_reussis, tests_executes);
 
      return tests_executes - tests_reussis;
+
 }
