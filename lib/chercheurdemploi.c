@@ -323,7 +323,7 @@ void Transitionner_profil(char nom[128], char prenom[128], char entrep[128])
     char* temp1,*temp2;
     a=0;
     int o,d,e;
-    while (a<y)
+    while (a<y-1)
     {
         fscanf(db2,"%s",str1);
         o=0;
@@ -343,10 +343,10 @@ void Transitionner_profil(char nom[128], char prenom[128], char entrep[128])
             a=y;
         }
         a++;
-        if (a==y && e==0)
-        {
-            temp1="";
-        }
+        // if (a==y-1 && e==0)
+        // {
+        //     temp1="";
+        // }
             
     }
     
@@ -425,7 +425,8 @@ void Transitionner_profil(char nom[128], char prenom[128], char entrep[128])
         if (x==w && ok==0)
         {
             printf("on arrive pas à vous identifier\n");
-            goto fin2;
+            // goto fin2;
+            return;
         }
         
     }
@@ -433,6 +434,117 @@ void Transitionner_profil(char nom[128], char prenom[128], char entrep[128])
     fclose(db);
     fclose(fp);
     FILE* db1=fopen("test/employe.csv", "r+");
+    int bb;
+    char* p1,*p2;
+    char str11[128];
+    bb=nbrligne(db1);
+    fseek(db1,0,SEEK_SET);
+    fscanf(db1,"%*s");
+
+    int kk,jj,ii,ll;
+    kk=0;
+    ll=0;
+    while (kk<bb-1 && e!=0)
+    {
+        ii=0;jj=0;
+        fscanf(db1,"%s",str11);
+        p1=strtok(str11,",");
+        p2=strtok(NULL,",");
+        p2=strtok(NULL,",");
+        p2=strtok(NULL,",");
+        p2=strtok(NULL,",");
+        p2=strtok(NULL,",");
+        p2=strtok(NULL,",");
+        p2=strtok(NULL,",");
+
+        while (p2[ii]==temp1[ii] && p2[ii]!='\0' && temp1[ii]!='\0')
+        {
+            ii++;
+            jj++;
+        }
+        
+        if (jj==strlen(p2) && jj==strlen(temp1))
+        {
+            ll++;
+        }
+        
+        kk++;
+
+    }
+    fseek(db1,0,SEEK_SET);
+    fscanf(db1,"%*s");
+    kk=0;
+    int pp,rr;
+    char coll[128];
+    // coll="a";
+    // char coll1[128];
+    rr=0;pp=0;
+    while (kk<bb-1 && e!=0)
+    {
+        ii=0;jj=0;
+        fscanf(db1,"%s",str11);
+        p1=strtok(str11,",");
+        p2=strtok(NULL,",");
+        p2=strtok(NULL,",");
+        p2=strtok(NULL,",");
+        p2=strtok(NULL,",");
+        p2=strtok(NULL,",");
+        p2=strtok(NULL,",");
+        p2=strtok(NULL,",");
+
+        while (p2[ii]==temp1[ii] && p2[ii]!='\0' && temp1[ii]!='\0')
+        {
+            ii++;
+            jj++;
+        }
+        
+        if (jj==strlen(p2) && jj==strlen(temp1))
+        {
+            pp++;
+            if (pp<ll && ll>1)
+            {
+                for (int qq = 0; qq< strlen(p1); qq++)
+                {
+                    coll[rr]=p1[qq];
+                    rr++;
+                }
+                coll[rr]=';';
+                rr++;
+            }
+
+            else if (pp==1 && ll==1)
+            {
+                for (int qq = 0; qq< strlen(p1); qq++)
+                {
+                    coll[rr]=p1[qq];
+                    rr++;
+                }
+                coll[rr]='\0';
+            }
+            else if (pp==ll && ll!=1)
+            {
+                for (int qq = 0; qq< strlen(p1); qq++)
+                {
+                    coll[rr]=p1[qq];
+                    rr++;
+                }
+                coll[rr]='\0';
+            }
+            
+            // while (coll[ss]!='\0')
+            // {
+            //     coll1[ss]=coll[ss];
+            //     ss++;
+            // }
+                
+        }
+
+        if (ll==0)
+        {
+            kk=k-2;
+        }
+        kk++;
+    }
     
     printf("%s\n",ajout);
     t2=strtok(ajout,",");
@@ -442,16 +554,31 @@ void Transitionner_profil(char nom[128], char prenom[128], char entrep[128])
     t5=strtok(NULL,",");
     t6=strtok(NULL,",");
     t7=strtok(NULL,",");
-    int f;
-    f=nbrligne(db1);
-    printf("%d\n",f);
-    fseek(db1,0,SEEK_CUR);
+    // int f;
+    // f=nbrligne(db1);
+    // printf("%d\n",f);
+    fseek(db1,0,SEEK_END);
     // id,nom,prenom,mail,code_postal,competences,collegues,entreprise
-    fprintf(db1,"\n%d,%s,%s,%s,%s,%s,%s,%s",f,t2,t3,t4,t5,t6,t7,temp1);
+    if (ll==0 && e!=0)
+    {
+        fprintf(db1,"\n%d,%s,%s,%s,%s,%s,,%s",bb,t2,t3,t4,t5,t6,temp1);
+    }
+    
+    else if (e==0)
+    {
+        fprintf(db1,"\n%d,%s,%s,%s,%s,%s,,",bb,t2,t3,t4,t5,t6);
+    }
+    
+    else
+    {
+        fprintf(db1,"\n%d,%s,%s,%s,%s,%s,%s,%s",bb,t2,t3,t4,t5,t6,coll,temp1);
+    }
+    
+    
     fclose(db1);
     remove("test/chercheurdemploi.csv");
     rename("test/tmp.csv","test/chercheurdemploi.csv");
-    fin2:
+    // fin2:
     return;
 }
 
@@ -1005,7 +1132,451 @@ void Recherche_par_poste(char nom[128], char prenom[128], int choix)
     fclose(db3);
 }
 
-void Rechercher_par_anciencollegue()
+void Rechercher_par_anciencollegue(char nom[128], char prenom[128], char entrep[128], int choix)
 {
-    return;
+    char str1[128];
+    char str2[128];
+    char str3[128];
+    char str4[128];
+
+    FILE *db1 = fopen("test/entreprise.csv", "r");
+    FILE *db2 = fopen("test/poste.csv", "r");
+    FILE *db3 = fopen("test/employe.csv", "r");
+    FILE *db4 = fopen("test/chercheurdemploi.csv", "r");
+
+    int a,b,c,d;
+    a=nbrligne(db1);
+    b=nbrligne(db2);
+    c=nbrligne(db3);
+    d=nbrligne(db4);
+   
+    fseek(db1,0,SEEK_SET);
+    fseek(db2,0,SEEK_SET);
+    fseek(db3,0,SEEK_SET);
+    fseek(db4,0,SEEK_SET);
+
+    char* v1,*v2; //entreprise
+    char* w1,*w3; //poste
+    char* x1,*x2,*x3,*x4,*x8; //employe
+    char* y2,*y3,*y6,*y7; //chercheurdemploi
+    char* v;
+
+    fscanf(db1,"%*s");
+    fscanf(db2,"%*s");
+    fscanf(db3,"%*s");
+    fscanf(db4,"%*s");
+
+    int e,f,g,ok1,ok2,ok3,ok;
+    e=0;
+    ok=0;
+
+    if (choix==1)
+    {
+        while (e<a-1)
+        {
+            f=0;g=0;ok1=0;
+            fscanf(db1,"%s",str1);
+            v1=strtok(str1,",");
+            v2=strtok(NULL,",");
+
+            while (v2[f]==entrep[f] && v2[f]!='\0')
+            {
+                f++;
+                g++;
+            }
+            if (g==strlen(v2))
+            {
+                ok1=1;
+            }
+            else
+            {
+                goto next1;
+            }
+            
+            int h,i,j;
+            h=0;
+            while (h<c-1 && ok1==1)
+            {
+                i=0;j=0;ok2=0;
+                fscanf(db3,"%s",str3);
+                x1=strtok(str3,",");
+                x2=strtok(NULL,",");
+                x3=strtok(NULL,",");
+                x4=strtok(NULL,",");
+                x8=strtok(NULL,",");
+                x8=strtok(NULL,",");
+                x8=strtok(NULL,",");
+                x8=strtok(NULL,",");
+
+                while (x8[i]==v1[i] && x8[i]!='\0' && v1[i]!='\0')
+                {
+                    i++;
+                    j++;
+                }
+                
+                if (j==strlen(x8) && j==strlen(v1))
+                {
+                    ok2=1;
+                }
+
+                else
+                {
+                    goto next2;
+                }
+                
+                int k,l,m,n,o,p,q,r;
+                k=0;
+                while (k<d-1 && ok2==1)
+                {
+                    l=0;m=0;n=0;o=0,p=0;q=0;r=0;ok3=0;
+                    fscanf(db4,"%s",str4);
+                    y2=strtok(str4,",");
+                    y2=strtok(NULL,",");
+                    y3=strtok(NULL,",");
+                    y6=strtok(NULL,",");
+                    y6=strtok(NULL,",");
+                    y6=strtok(NULL,",");
+                    y7=strtok(NULL,",");
+
+                    while (y2[l]==nom[l] && y2[l]!='\0')
+                    {
+                        l++;
+                        m++;
+                    }
+                    
+                    while (y3[n]==prenom[n] && y3[n]!='\0')
+                    {
+                        n++;
+                        o++;
+                    }
+                    
+                    if (m==strlen(nom) && o==strlen(prenom))
+                    {
+                        ok3=1;
+                    }
+
+                    else
+                    {
+                        goto next3;
+                    }
+                    
+                    if (ok3==1)
+                    {
+                        while (y7[p]!='\0')
+                        {
+                            if (y7[p]==x1[r])
+                            {
+                                p++;
+                                q++;
+                                r++;
+                            }
+                            
+                            else
+                            {
+                                p++;
+                            }
+                            
+                        }
+
+                        if (q==strlen(x1))
+                        {
+                            ok++;
+                            if (ok==1)
+                            {
+                                printf("voici le(s) résultat(s) de votre recherche:\n");
+                            }
+                            printf("Nom du (de la) collègue:%s\n",x2);
+                            printf("Prénom du (de la) collègue:%s\n",x3);
+                            printf("Adresse mail du (de la) collègue:%s\n",x4);
+                            printf("---------------------------------------------\n");
+                        }
+                        
+                    }
+                    next3:
+                    k++;
+                    if (k==d-1)
+                    {
+                        fseek(db4,0,SEEK_SET);
+                        fscanf(db4,"%*s");
+                    }
+                    
+                }
+                
+                next2:
+                h++;
+                if (h==c-1)
+                {
+                    fseek(db3,0,SEEK_SET);
+                    fscanf(db3,"%*s");
+                }
+                
+            }
+            
+            next1:
+            e++;
+            if (e==a-1 && ok==0)
+            {
+                printf("nous n'avons pas pu trouver des résultats pour votre recherche:\n");
+            }
+            
+        }
+    }
+    
+    else if (choix==2)
+    {
+        while (e<d-1)
+        {
+            f=0;g=0;ok1=0;
+            int x,y;
+            x=0;y=0;
+            fscanf(db4,"%s",str4);
+            y2=strtok(str4,",");
+            y2=strtok(NULL,",");
+            y3=strtok(NULL,",");
+            y6=strtok(NULL,",");
+            y6=strtok(NULL,",");
+            y6=strtok(NULL,",");
+            y7=strtok(NULL,",");
+
+            while (y2[f]==nom[f] && y2[f]!='\0')
+            {
+                f++;
+                g++;
+            }
+
+            while (y3[x]==prenom[x] && y3[x]!='\0')
+            {
+                x++;
+                y++;
+            }
+            
+            if (g==strlen(nom) && y==strlen(prenom))
+            {
+                ok1=1;
+            }
+
+            else
+            {
+                goto next4;
+            }
+            
+            int i,j,k,l;
+            i=0;
+            while (i<c-1 && ok1==1)
+            {
+                j=0;k=0;l=0;ok2=0;
+                fscanf(db3,"%s",str3);
+                x1=strtok(str3,",");
+                x2=strtok(NULL,",");
+                x3=strtok(NULL,",");
+                x4=strtok(NULL,",");
+                x8=strtok(NULL,",");
+                x8=strtok(NULL,",");
+                x8=strtok(NULL,",");
+                x8=strtok(NULL,",");
+
+                while (y7[j]!='\0')
+                {
+                    if (y7[j]==x1[k])
+                    {
+                        j++;
+                        k++;
+                        l++;
+                    }
+                    
+                    else
+                    {
+                        j++;
+                    }
+                    
+                }
+                
+                if (l==strlen(x1))
+                {
+                    ok2=1;
+                }
+                
+                else
+                {
+                    goto next5;
+                }
+                
+                int l,m,n,o,p,q,r,s,t,u,w;
+                l=0;
+                while (l<b-1 && ok2==1)
+                {
+                    m=0;n=0;o=0;p=0;q=0;r=0;s=0;t=0;u=0;w=0;ok3=0;
+                    fscanf(db2,"%s",str2);
+                    w1=strtok(str2,",");
+                    w3=strtok(NULL,",");
+                    w3=strtok(NULL,",");
+
+                    while (w1[m]==x8[m] && w1[m]!='\0' && x8[m]!='\0')
+                    {
+                        m++;
+                        n++;
+                    }
+
+                    if (n==strlen(w1) && n==strlen(x8))
+                    {
+                        ok3=1;
+                    }
+                    else
+                    {
+                        goto next6;
+                    }
+                    
+                    if (ok3==1)
+                    {
+                        while (y6[o]!='\0')
+                        {
+                            if (y6[o]==';')
+                            {
+                                p++;
+                                o++;
+                            }
+                            else
+                            {
+                                o++;
+                            }    
+                        }
+                        if (p==0)
+                        {
+                            while (w3[q]!='\0')
+                            {
+                                if (w3[q]==y6[r])
+                                {
+                                    q++;
+                                    r++;
+                                    s++;
+                                }
+                                else
+                                {
+                                    q++;
+                                }
+
+                                if (s==strlen(y6) && w3[q]==';')
+                                {
+                                    w3[q]='\0';
+                                    ok++;
+                                    if (ok==1)
+                                    {
+                                        printf("voici le(s) résultat(s) de votre recherche:\n");
+                                    }
+                                    printf("Nom du (de la) collègue:%s\n",x2);
+                                    printf("Prénom du (de la) collègue:%s\n",x3);
+                                    printf("Adresse mail du (de la) collègue:%s\n",x4);
+                                    printf("---------------------------------------------\n");
+                                    
+                                }
+                                else if (s==strlen(y6) && w3[q]=='\0')
+                                {
+                                    w3[q]='\0';
+                                    ok++;
+                                    if (ok==1)
+                                    {
+                                        printf("voici le(s) résultat(s) de votre recherche:\n");
+                                    }
+                                    printf("Nom du (de la) collègue:%s\n",x2);
+                                    printf("Prénom du (de la) collègue:%s\n",x3);
+                                    printf("Adresse mail du (de la) collègue:%s\n",x4);
+                                    printf("---------------------------------------------\n");
+                                }
+                                
+                                
+                            }    
+                        }
+                        
+                        else
+                        {
+                            v=strtok(y6,";");
+                            for (int mm = 0; mm < p+1; mm++)
+                            {
+                                t=0;u=0;w=0;
+                                while (w3[t]!='\0')
+                                {
+                                    if (w3[t]==v[u])
+                                    {
+                                        t++;
+                                        u++;
+                                        w++;
+                                    }
+                                    else
+                                    {
+                                        w=0;
+                                        t++;
+                                    }
+                                    
+                                    if (t==strlen(v) && w3[t]==';')
+                                    {
+                                        ok++;
+                                        w3[t]='\0';
+                                        mm=p+1;
+                                        if (ok==1)
+                                        {
+                                            printf("voici le(s) résultat(s) de votre recherche:\n");
+                                        }
+                                        printf("Nom du (de la) collègue:%s\n",x2);
+                                        printf("Prénom du (de la) collègue:%s\n",x3);
+                                        printf("Adresse mail du (de la) collègue:%s\n",x4);
+                                        printf("---------------------------------------------\n");
+                                    }
+                                    
+                                    else if (t==strlen(v) && w3[t]=='\0')
+                                    {
+                                        ok++;
+                                        w3[t]='\0';
+                                        mm=p+1;
+                                        if (ok==1)
+                                        {
+                                            printf("voici le(s) résultat(s) de votre recherche:\n");
+                                        }
+                                        printf("Nom du (de la) collègue:%s\n",x2);
+                                        printf("Prénom du (de la) collègue:%s\n",x3);
+                                        printf("Adresse mail du (de la) collègue:%s\n",x4);
+                                        printf("---------------------------------------------\n");
+                                    }
+                                    
+                                }
+                                v=strtok(NULL,";");
+                            }
+                            
+                        }
+                    }
+                    
+                    next6:
+                    l++;
+                    if (l==b-1)
+                    {
+                        fseek(db2,0,SEEK_SET);
+                        fscanf(db2,"%*s");
+                    }
+                    
+                    
+                }
+                
+                next5:
+                i++;
+                if (i==c-1)
+                {
+                fseek(db3,0,SEEK_SET);
+                fscanf(db3,"%*s");
+                }
+                
+            }
+            
+            
+            next4:
+            e++;
+            if (e==d-1 && ok==0)
+            {
+                printf("nous n'avons pas pu trouver des résultats pour vtre recherche\n");
+            }       
+        }   
+    }
+    
+    fclose(db1);
+    fclose(db2);
+    fclose(db3);
+    fclose(db4);
 }
