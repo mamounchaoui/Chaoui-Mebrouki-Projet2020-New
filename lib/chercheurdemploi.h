@@ -8,5 +8,5 @@ void Modifier_profil(char nom[128], char prenom[128], char compe[128], char col[
 void Transitionner_profil(char nom[128], char prenom[128], char entrep[128]);
 void Supprimer_profil(char nom[128], char prenom[128]);
 void Recherche_par_poste(char nom[128], char prenom[128], int choix);
-void Rechercher_par_anciencollegue();
+void Rechercher_par_anciencollegue(char nom[128], char prenom[128], char entrep[128], int choix);
 
