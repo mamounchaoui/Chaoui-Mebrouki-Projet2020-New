@@ -595,16 +595,17 @@ void Supprimer_profil(char nom[128], char prenom[128])
     char* t2,*t3,*t4,*t5,*t6,*t7;
     fscanf(db,"%s",str);
 
-    char* v;
+    char* v1,*v2;
     int ok;
-    v=strtok(str,",");
-    while (v!=NULL && x<w )
+    while (x<w-1)
     {
+        fscanf(db,"%s",str);
         ok=0;
-        v=strtok(NULL,",");
+        v1=strtok(str,",");
+        v1=strtok(NULL,",");
         i=0;
         y=0;
-        while (v[i]==nom[i] && v[i]!='\0')
+        while (v1[i]==nom[i] && v1[i]!='\0')
         {
             y++;
             i++;
@@ -612,8 +613,8 @@ void Supprimer_profil(char nom[128], char prenom[128])
         }
         j=0;
         z=0;
-        v=strtok(NULL,",");
-        while (v[j]==prenom[j] && v[j]!='\0')
+        v2=strtok(NULL,",");
+        while (v2[j]==prenom[j] && v2[j]!='\0')
         {
             z++;
             j++;
@@ -621,7 +622,7 @@ void Supprimer_profil(char nom[128], char prenom[128])
         }
         t=strlen(nom);
         k=strlen(prenom);
-        if (y==t && z==k)
+        if (y==t && z==k && k==strlen(v2) && y==strlen(v1))
         {
             ok=1;
             fseek(db,0,SEEK_SET);
@@ -630,7 +631,7 @@ void Supprimer_profil(char nom[128], char prenom[128])
             int m=1;
             while (m<w-1)
             {   
-                if (m==x)
+                if (m==x+1)
                 {
                     fscanf(db,"%s",str);
                 }
@@ -658,10 +659,8 @@ void Supprimer_profil(char nom[128], char prenom[128])
         }
         next:
         // fscanf(db,"%*s");
-        fscanf(db,"%s",str);
         x++;
-        v=strtok(str,",");
-        if (x==w && ok==0)
+        if (x==w-1 && ok==0)
         {
             printf("on arrive pas à vous identifier\n");
             goto fin2;
@@ -682,7 +681,7 @@ void Recherche_par_poste(char nom[128], char prenom[128], int choix)
     char str1[128];
     char str2[128];
     char str3[128];
-    int ok,ok1,ok2,ok3,ok4,ok5,ok6;
+    int ok,okk,ok1,ok2,ok3,ok4,ok5,ok6;
     int m,n,nn;
 
     FILE *db1 = fopen("test/poste.csv", "r");
@@ -702,6 +701,7 @@ void Recherche_par_poste(char nom[128], char prenom[128], int choix)
     char* x2,*x3,*x5,*x6;
     int a,b,c,d,e,f;
     int x;
+    okk=0;
     ok=0;
     d=0;
     f=1;
@@ -738,9 +738,10 @@ void Recherche_par_poste(char nom[128], char prenom[128], int choix)
                 ll++;
             }
 
-            if (ii==strlen(nom) && ll==strlen(prenom))
+            if (ii==strlen(nom) && ll==strlen(prenom) && ii==strlen(x2) && ll==strlen(x3))
             {
                 ok1=1;
+                okk++;
             }
 
             else
@@ -903,9 +904,13 @@ void Recherche_par_poste(char nom[128], char prenom[128], int choix)
             }
             suiv:
             zz++;
-            if (zz==nn-1 && ok==0)
+            if (zz==nn-1 && ok==0 && okk!=0)
             {
                 printf("nous n'avons pas pu trouver des résultats correspondant à votre profil\n");
+            }
+            if (zz==nn-1 && okk==0)
+            {
+                printf("votre profil n'existe pas\n");
             }
             
         }
@@ -937,9 +942,10 @@ void Recherche_par_poste(char nom[128], char prenom[128], int choix)
                 ll++;
             }
 
-            if (ii==strlen(nom) && ll==strlen(prenom))
+            if (ii==strlen(nom) && ll==strlen(prenom) && ii==strlen(x2) && ll==strlen(x3))
             {
                 ok1=1;
+                okk++;
             }
 
             else
@@ -1118,9 +1124,14 @@ void Recherche_par_poste(char nom[128], char prenom[128], int choix)
             }
             suiv3:
             zz++;
-            if (zz==nn-1 && ok==0)
+            if (zz==nn-1 && ok==0 && okk!=0)
             {
                 printf("nous n'avons pas pu trouver des résultats correspondant à votre profil\n");
+            }
+
+            if (zz==nn-1 && okk==0)
+            {
+                printf("votre profil n'existe pas\n");
             }
             
         }
