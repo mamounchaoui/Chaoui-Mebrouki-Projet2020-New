@@ -45,7 +45,7 @@ int main()
     FILE *db5 = fopen("test/poste.csv", "r");
     // tests pour 'entreprise'
 
-    // // tests pour 'chercheurdemploi'
+    // tests pour 'chercheurdemploi'
     // tests nbrligne
 
     TEST(nbrligne(db1) == 4);
@@ -63,7 +63,7 @@ int main()
     char competence[128]="theatre";
     char ancien_collegue[128]="Bartaire,Adrien";
     char str[128];
-    char* v1,*v2,*v3,*v4,*v5,*v6,*v7;
+    // char* v1,*v2,*v3,*v4,*v5,*v6,*v7;
     Creer_profil(nom, prenom, mail, code_postal, competence, ancien_collegue);
      
     a=nbrligne(db1);
@@ -73,22 +73,29 @@ int main()
     {
         fscanf(db1,"%s",str);
     }
-     
-    v1=strtok(str,",");
-    v2=strtok(NULL,",");
-    v3=strtok(NULL,",");
-    v4=strtok(NULL,",");
-    v5=strtok(NULL,",");
-    v6=strtok(NULL,",");
-    v7=strtok(NULL,",");
-     
-    TEST(strcmp(v1, "4") == 0);
-    TEST(strcmp(v2, "Balança") == 0);
-    TEST(strcmp(v3, "Maxime") == 0);
-    TEST(strcmp(v4, "maxbalança65@gmail.com") == 0);
-    TEST(strcmp(v5, "33003") == 0);
-    TEST(strcmp(v6, "theatre") == 0);
-    TEST(strcmp(v7, "1") == 0);
+
+    TEST(strcmp(str, "4,Balança,Maxime,maxbalança65@gmail.com,33003,theatre,1") == 0); 
+    char nom1[128]="Ngueuga";
+    char prenom1[128]="Franck";
+    char mail1[128]="franckngueuga@yahoo.fr";
+    char code_postal1[128]="33783";
+    char competence1[128]="Anglais";
+    char ancien_collegue1[128]="Betbeder,Bruno";
+
+    Creer_profil(nom1, prenom1, mail1, code_postal1, competence1, ancien_collegue1);
+    fscanf(db1,"%s",str);
+    TEST(strcmp(str, "5,Ngueuga,Franck,franckngueuga@yahoo.fr,33783,Anglais,") == 0); 
+
+    char nom2[128]="Vidal";
+    char prenom2[128]="Hugo";
+    char mail2[128]="vid_hugo_98@outlook.fr";
+    char code_postal2[128]="37634";
+    char competence2[128]="SQL";
+    char ancien_collegue2[128]="Robbin,Bruno";
+
+    Creer_profil(nom2, prenom2, mail2, code_postal2, competence2, ancien_collegue2);
+    fscanf(db1,"%s",str);
+    TEST(strcmp(str, "6,Vidal,Hugo,vid_hugo_98@outlook.fr,37634,SQL,") == 0);
     fclose(db1);
     }
 
@@ -101,14 +108,12 @@ int main()
         char p4[128]="Emannuel";
         char n5[128]="Defritsh";
         char p5[128]="Gaetan";
+        char n6[128]="Vidal";
+        char p6[128]="Hugo";
         char compe[128]="Java";
         char col[128]="Bartaire,Adrien";
         char code[128]="12345";
         char str[128];
-        char* x1,*x2,*x3,*x4,*x5,*x6,*x7;
-        // 1-Ajouter des compétences
-        // 2-Ajouter un(e) ancien(ne) collègue de travail
-        // 3-Modifier le code postal
         x=1;
         y=2;
         z=3;
@@ -116,59 +121,25 @@ int main()
         Modifier_profil(n3, p3, compe, col, code, z);
         Modifier_profil(n4, p4, compe, col, code, x);
         Modifier_profil(n5, p5, compe, col, code, y);
+        Modifier_profil(n6, p6, compe, col, code, y);
         FILE *db9 = fopen("test/chercheurdemploi.csv", "r");
 
         fscanf(db9,"%*s");
         fscanf(db9,"%s",str);
-        x1=strtok(str,",");
-        x2=strtok(NULL,",");
-        x3=strtok(NULL,",");
-        x4=strtok(NULL,",");
-        x5=strtok(NULL,",");
-        x6=strtok(NULL,",");
-        x7=strtok(NULL,",");
-          
-        TEST(strcmp(x1, "1") == 0);
-        TEST(strcmp(x2, "Dupont") == 0);
-        TEST(strcmp(x3, "Michel") == 0);
-        TEST(strcmp(x4, "dup.michel@gmail.com") == 0);
-        TEST(strcmp(x5, "12345") == 0);
-        TEST(strcmp(x6, "bureatique") == 0);
-        TEST(strcmp(x7, "2;1") == 0);
+        TEST(strcmp(str, "1,Dupont,Michel,dup.michel@gmail.com,12345,bureatique,2;1") == 0);
 
         fscanf(db9,"%s",str);
-        x1=strtok(str,",");
-        x2=strtok(NULL,",");
-        x3=strtok(NULL,",");
-        x4=strtok(NULL,",");
-        x5=strtok(NULL,",");
-        x6=strtok(NULL,",");
-        x7=strtok(NULL,",");
-          
-        TEST(strcmp(x1, "2") == 0);
-        TEST(strcmp(x2, "Devathaire") == 0);
-        TEST(strcmp(x3, "Emannuel") == 0);
-        TEST(strcmp(x4, "eannueldev@yahoo.fr") == 0);
-        TEST(strcmp(x5, "13005") == 0);
-        TEST(strcmp(x6, "CSS;HTML;JS;Java") == 0);
-        TEST(strcmp(x7, "1") == 0);
+        TEST(strcmp(str, "2,Devathaire,Emannuel,eannueldev@yahoo.fr,13005,CSS;HTML;JS;Java,1") == 0);
 
         fscanf(db9,"%s",str);
-        x1=strtok(str,",");
-        x2=strtok(NULL,",");
-        x3=strtok(NULL,",");
-        x4=strtok(NULL,",");
-        x5=strtok(NULL,",");
-        x6=strtok(NULL,",");
-        x7=strtok(NULL,",");
-        // 3,Defritsh,Gaetan,defgaetan98@hotmail.fr,33003,theatre,3
-        TEST(strcmp(x1, "3") == 0);
-        TEST(strcmp(x2, "Defritsh") == 0);
-        TEST(strcmp(x3, "Gaetan") == 0);
-        TEST(strcmp(x4, "defgaetan98@hotmail.fr") == 0);
-        TEST(strcmp(x5, "33003") == 0);
-        TEST(strcmp(x6, "theatre") == 0);
-        TEST(strcmp(x7, "3;1") == 0);
+        TEST(strcmp(str, "3,Defritsh,Gaetan,defgaetan98@hotmail.fr,33003,theatre,3;1") == 0);
+
+        fscanf(db9,"%s",str);
+        fscanf(db9,"%s",str);
+        TEST(strcmp(str, "5,Ngueuga,Franck,franckngueuga@yahoo.fr,33783,Anglais,") == 0);
+
+        fscanf(db9,"%s",str);
+        TEST(strcmp(str, "6,Vidal,Hugo,vid_hugo_98@outlook.fr,37634,SQL,1") == 0);
         fclose(db9);
     }
      
@@ -216,6 +187,9 @@ int main()
         TEST(strcmp(w2, "Emannuel") != 0);
     }
     fclose(db6);
+    char n2[128]="Devathaire";
+    char p2[128]="Patrick";
+    Supprimer_profil(n2, p2);// affiche:on arrive pas à vous identifier
     }
 
     // tests de Transitionner_profil
@@ -223,8 +197,8 @@ int main()
     int c ,d;
     char n2[128]="Defritsh";
     char p2[128]="Gaetan";
-    char entrep[128]="Google";
-    char* w1,*w2,*w3,*w4,*w5,*w6,*w7,*w8;
+    char entrep[128]="Disney";
+    char* w1,*w2;
     char str[128];
 
     Transitionner_profil(n2, p2, entrep);
@@ -248,27 +222,15 @@ int main()
     }
 
     fscanf(db8,"%*s");
-    for (int i = 0; i <=d+1; i++)
+    for (int i = 0; i <d-3; i++)
     {
         fscanf(db8,"%s",str);
     }
-    w1=strtok(str,",");
-    w2=strtok(NULL,",");
-    w3=strtok(NULL,",");
-    w4=strtok(NULL,",");
-    w5=strtok(NULL,",");
-    w6=strtok(NULL,",");
-    w7=strtok(NULL,",");
-    w8=strtok(NULL,",");
-
-    TEST(strcmp(w1, "4") == 0);
-    TEST(strcmp(w2, "Defritsh") == 0);
-    TEST(strcmp(w3, "Gaetan") == 0);
-    TEST(strcmp(w4, "defgaetan98@hotmail.fr") == 0);
-    TEST(strcmp(w5, "33003") == 0);
-    TEST(strcmp(w6, "theatre") == 0);
-    TEST(strcmp(w7, "1;3") == 0);
-    TEST(strcmp(w8, "2") == 0);
+    TEST(strcmp(str, "2,Buisson,Hugo,Buisson1999@saliege.fr,99023,bureautique,3;4,1") == 0);
+    
+    fscanf(db8,"%s",str);
+    fscanf(db8,"%s",str);
+    TEST(strcmp(str, "4,Defritsh,Gaetan,defgaetan98@hotmail.fr,33003,theatre,3;1;2,1") == 0);
     fclose(db7);
     fclose(db8);
     }
@@ -277,14 +239,14 @@ int main()
     {
 
         char nom[128]="Dupont";
-        char prenom[128]="Emannuel";
+        char prenom[128]="Michel";
         char mail[128]="dup.michel@gmail.com";
         char code_postal[128]="67940";
         char competence[128]="bureatique";
         char ancien_collegue[128]="Buisson,Hugo";
 
         char nom1[128]="Devathaire";
-        char prenom1[128]="Michel";
+        char prenom1[128]="Emannuel";
         char mail1[128]="eannueldev@yahoo.fr";
         char code_postal1[128]="13005";
         char competence1[128]="CSS;HTML;JS";
@@ -311,11 +273,13 @@ int main()
 
         Recherche_par_poste(nom, prenom, a);
         // résultat obtenu:aucun résultat obtenu (résultat voulu)
+        printf("========================================================\n");
 
         char nom1[128]="Devathaire";
         char prenom1[128]="Emannuel";
         Recherche_par_poste(nom1, prenom1, a);
         // résultat obtenu:aucun résultat obtenu (corresspont au résultat voulu)
+        printf("========================================================\n");
 
         char nom2[128]="Defritsh";
         char prenom2[128]="Gaetan";
@@ -337,6 +301,7 @@ int main()
         // l'adresse mail de l'entreprise est:comclub@yahoo.fr
         // le code postal de l'entreprise est:77700
         // ---------------------------------------
+        printf("========================================================\n");
 
         Recherche_par_poste(nom2, prenom2, b);
         // résultat obtenu: (corresspont au résultat voulu)
@@ -351,13 +316,39 @@ int main()
         // l'adresse mail de l'entreprise est:comclub@yahoo.fr
         // le code postal de l'entreprise est:77700
         // ---------------------------------------
+        printf("========================================================\n");
         Recherche_par_poste(nom, prenom, b);
         // résultat obtenu: (corresspont au résultat voulu)
         // résultat obtenu:aucun résultat obtenu (corresspont au résultat voulu)
+        printf("========================================================\n");
+
+        char nom3[128]="Vidal";
+        char prenom3[128]="Hugo";
+        Recherche_par_poste(nom3, prenom3, a);
+        // résultat obtenu: (corresspont au résultat voulu)
+        // Voici le(s) résultat(s) de votre recherche
+        // le titre du poste est:developpeur
+        // le nom de l'entreprise:Google
+        // l'adresse mail de l'entreprise est:emplois@google.com
+        // le code postal de l'entreprise est:75009
+        // ---------------------------------------
+        printf("========================================================\n");
+
+        Recherche_par_poste(nom3, prenom3, b);
+        // résultat obtenu: (corresspont au résultat voulu)
+        // résultat obtenu:aucun résultat obtenu (corresspont au résultat voulu)
+        printf("========================================================\n");
+
+        char nom4[128]="Ngueuga";
+        char prenom4[128]="Franck";
+        Recherche_par_poste(nom4, prenom4, a);
+        // résultat obtenu: (corresspont au résultat voulu)
+        // résultat obtenu:aucun résultat obtenu (corresspont au résultat voulu)
+        printf("========================================================\n");
     }
 
     // test Rechercher_par_anciencollegue
-    {
+    // {
         char nom[128]="Balança";
         char prenom[128]="Maxime";
         char entreprise[128]="Google";
@@ -385,7 +376,40 @@ int main()
         // Nom du (de la) collègue:Bouvier
         // Prénom du (de la) collègue:Rodolphe
         // Adresse mail du (de la) collègue:Bouvierrodolphe@gmail.com
-    }
+        printf("========================================================\n");
+
+        char nom2[128]="Ngueuga";
+        char prenom2[128]="Franck";
+        char entreprise2[128]="Google";
+
+        Rechercher_par_anciencollegue(nom2, prenom2, entreprise2, b);
+        // résultat obtenu:aucun résultat obtenu (corresspont au résultat voulu)
+        printf("========================================================\n");
+
+        char nom3[128]="Vidal";
+        char prenom3[128]="Hugo";
+        char entreprise3[128]="Google";
+
+        Rechercher_par_anciencollegue(nom3, prenom3, entreprise3, a);
+        // résultat obtenu:aucun résultat obtenu (corresspont au résultat voulu)
+        // voici le(s) résultat(s) de votre recherche:
+        // voici le(s) résultat(s) de votre recherche:
+        // Nom du (de la) collègue:Bartaire
+        // Prénom du (de la) collègue:Adrien
+        // Adresse mail du (de la) collègue:a_bartaire@google.com
+        // ---------------------------------------------
+        printf("========================================================\n");
+
+        Rechercher_par_anciencollegue(nom3, prenom3, entreprise3, b);
+        // résultat obtenu:aucun résultat obtenu (corresspont au résultat voulu)
+        // voici le(s) résultat(s) de votre recherche:
+        // voici le(s) résultat(s) de votre recherche:
+        // Nom du (de la) collègue:Bartaire
+        // Prénom du (de la) collègue:Adrien
+        // Adresse mail du (de la) collègue:a_bartaire@google.com
+        // ---------------------------------------------
+        printf("========================================================\n");
+    // }
     // tests pour 'employe'
 
      
@@ -397,5 +421,5 @@ int main()
 
     return tests_executes - tests_reussis;
     
-
 }
+
