@@ -129,7 +129,7 @@ int main()
         TEST(strcmp(str, "1,Dupont,Michel,dup.michel@gmail.com,12345,bureatique,2;1") == 0);
 
         fscanf(db9,"%s",str);
-        TEST(strcmp(str, "2,Devathaire,Emannuel,eannueldev@yahoo.fr,13005,CSS;HTML;JS;Java,1") == 0);
+        TEST(strcmp(str, "2,Devathaire,Emannuel,emannueldev@yahoo.fr,13005,CSS;HTML;JS;Java,1") == 0);
 
         fscanf(db9,"%s",str);
         TEST(strcmp(str, "3,Defritsh,Gaetan,defgaetan98@hotmail.fr,33003,theatre,3;1") == 0);
