@@ -933,7 +933,7 @@ void Transitionner_profil(char nom[128], char prenom[128], char entrep[128])
     }
     else  if (ll==0 && e!=0 && strlen(t7)==0)
     {
-        fprintf(db3,"\n%d,%s,%s,%s,%s,%s,%s",bb,t2,t3,t4,t5,t6,temp1);
+        fprintf(db3,"\n%d,%s,%s,%s,%s,%s,,%s",bb,t2,t3,t4,t5,t6,temp1);
     }
     
     
