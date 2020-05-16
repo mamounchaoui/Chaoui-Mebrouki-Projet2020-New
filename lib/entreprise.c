@@ -25,12 +25,12 @@ void supprimer_poste(FILE* fic, char* titre)
     return ;
 }
 
-int trouver_nom_ent(FILE* fic)
+int trouver_nom_ent(FILE* fic,char* nomEnt)
 {
     return 0;
 }
 
-int trouver_poste_par_competence(FILE* fic, char* competence)
+int trouver_poste_par_competence(FILE* fic, char* competence, char entTrouve[128])
 {
     return 0;
 }
