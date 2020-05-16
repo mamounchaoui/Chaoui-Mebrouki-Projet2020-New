@@ -47,7 +47,37 @@ void supprimer_entreprise(FILE* fic, char* nom_ent)
 }
 
 void creer_poste_a_pourvoir(FILE* fic, poste* unposte){
-    return ;
+     
+    int l=0,compt=1;
+    char debut[50] = "id,titre,competences,entreprise\n";
+    char chunk[128];
+
+    fputs(debut,fic);
+    fseek(fic,0,SEEK_SET);
+
+    while(fgets(chunk, sizeof(chunk), fic) != NULL) {
+         if(chunk[0] == '\n'){
+            fseek(fic,-1,SEEK_CUR);
+            goto here;
+        }
+        //fputs(chunk, stdout);
+        l++;
+     }
+here:
+    while(compt != 5){
+        switch(compt){
+            case 1: fprintf(fic,"%d",l); break; 
+            case 2: fputs(unposte->titre,fic); break; 
+            case 3: fputs(unposte->competences,fic); break;
+            case 4: fprintf(fic,"%d",unposte->ent->index);break;
+        }
+        if(compt < 4){
+            fputs(",",fic);
+        }
+        compt++;
+    }
+    fputs("\n",fic);
+    
 }
 
 void supprimer_poste(FILE* fic, char* titre)
@@ -60,7 +90,7 @@ int trouver_nom_ent(FILE* fic,char* nomEnt)
     return 0;
 }
 
-int trouver_poste_par_competence(FILE* fic, char* competence, char entTrouve[128])
+int trouver_poste_par_competence(FILE* fic, char* competence, int entTrouve[128])
 {
     return 0;
 }
