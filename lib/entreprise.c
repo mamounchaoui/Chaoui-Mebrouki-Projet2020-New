@@ -128,6 +128,50 @@ int trouver_nom_ent(FILE* fic,char* nomEnt)
     return 0;
 }
 
+entreprise* get_ent(FILE* fic, int indexB){
+    int l=0,i=0,j=0,nbrVirgule=0;
+    char chunk[128],Nom[128],code[128],mail[128];
+    entreprise *tmp = (entreprise*)malloc(sizeof(entreprise));
+
+    fseek(fic,0,SEEK_SET);
+    while(fgets(chunk, sizeof(chunk), fic) != NULL) {
+        if(l == indexB){
+            while(nbrVirgule != 4 ){
+                while(chunk[i] != ',' && chunk[i] != '\n'){
+                    
+                    switch(nbrVirgule){
+                        case 0: i++; break;
+                        case 1: 
+                                Nom[j]=chunk[i];
+                                i++;j++;
+                                break;
+                        case 2: 
+                                code[j]=chunk[i];
+                                i++;j++;
+                                break;
+                        case 3: 
+                                mail[j]=chunk[i];
+                                i++;j++;
+                                break;
+                    }
+                }
+                if(chunk[i] == ',' || chunk[i] == '\n' ){
+                    nbrVirgule++;
+                    i++;
+                    j=0;
+                }
+            }
+        }
+    l++;
+    }
+    tmp->index=indexB;
+    tmp->nom = Nom;
+    tmp->codepost=code;
+    tmp->courriel=mail;
+    
+    return tmp;
+}
+
 int trouver_poste_par_competence(FILE* fic, char* competence, int entTrouve[128])
 {
     return 0;
