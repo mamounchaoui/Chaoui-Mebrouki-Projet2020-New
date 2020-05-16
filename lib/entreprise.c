@@ -87,6 +87,44 @@ void supprimer_poste(FILE* fic, char* titre)
 
 int trouver_nom_ent(FILE* fic,char* nomEnt)
 {
+    int l=0,i=0,j,flag=0;
+    char chunk[128],Nom[128],retour[128];
+
+    fseek(fic,0,SEEK_SET);
+    while(fgets(chunk, sizeof(chunk), fic) != NULL) {
+        
+        j=0;flag = 0;
+        while(flag == 0){
+        if(chunk[i]==','){
+            flag++;
+            i++;
+        }
+        while(chunk[i] != ',' && flag == 1){
+            Nom[j]=chunk[i];
+            i++;
+            j++;
+        }
+        //fputs(chunk, stdout);
+        if(strcmp(Nom,nomEnt) == 0){
+            //printf("Trouvé l'index est : %c \n",chunk[0]);
+            int k=0;
+            while(chunk[k] != ','){
+                retour[k]=chunk[k];
+                k++;
+            }
+            return atoi(retour);
+        }
+        for(int k=0;k<j;k++){
+            Nom[k]='\0';
+        }
+
+        i++;
+        }
+        if(flag == 1)
+            i=0;
+        l++;
+     }
+
     return 0;
 }
 
