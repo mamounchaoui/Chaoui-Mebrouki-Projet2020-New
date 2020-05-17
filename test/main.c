@@ -417,51 +417,99 @@ int main()
 
     // tests Creer_profil2
     {
-    FILE *db5 = fopen("test/employe.csv", "r");
-    int a,b;
-    char nom[128]="Valey";
-    char prenom[128]="Martin";
-    char mail[128]="martvaley65@gmail.com";
-    char code_postal[128]="37893";
-    char competence[128]="comedie";
-    char ancien_collegue[128]="Bartaire,Adrien";
-    char entreprise[128]="Comedieclub";
-    char str[128];
-    Creer_profil2(nom, prenom, mail, code_postal, competence, ancien_collegue,entreprise);
-     
-    a=nbrligne(db5);
-    fseek(db5,0,SEEK_SET);
-    fscanf(db5,"%*s");
-    for (int i = 0; i < a-1; i++)
-    {
-        fscanf(db5,"%s",str);
-    }
+        FILE *db5 = fopen("test/employe.csv", "r");
+        int a,b;
+        char nom[128]="Valey";
+        char prenom[128]="Martin";
+        char mail[128]="martvaley65@gmail.com";
+        char code_postal[128]="37893";
+        char competence[128]="comedie";
+        char ancien_collegue[128]="Bartaire,Adrien";
+        char entreprise[128]="Comedieclub";
+        char str[128];
+        Creer_profil2(nom, prenom, mail, code_postal, competence, ancien_collegue,entreprise);
+        
+        a=nbrligne(db5);
+        fseek(db5,0,SEEK_SET);
+        fscanf(db5,"%*s");
+        for (int i = 0; i < a-1; i++)
+        {
+            fscanf(db5,"%s",str);
+        }
 
-    TEST(strcmp(str, "5,Valey,Martin,martvaley65@gmail.com,37893,comedie,1,4") == 0); 
-    fclose(db5);
-    
-    char nom1[128]="Gally";
-    char prenom1[128]="Romain";
-    char mail1[128]="rom_clown@yahoo.fr";
-    char code_postal1[128]="43783";
-    char competence1[128]="theatre";
-    char ancien_collegue1[128]="Betbeder,Bruno";
-    char entreprise1[128]="Comedieclub";
+        TEST(strcmp(str, "5,Valey,Martin,martvaley65@gmail.com,37893,comedie,1,4") == 0); 
+        fclose(db5);
+        
+        char nom1[128]="Gally";
+        char prenom1[128]="Romain";
+        char mail1[128]="rom_clown@yahoo.fr";
+        char code_postal1[128]="43783";
+        char competence1[128]="theatre";
+        char ancien_collegue1[128]="Betbeder,Bruno";
+        char entreprise1[128]="Comedieclub";
 
-    Creer_profil2(nom1, prenom1, mail1, code_postal1, competence1, ancien_collegue1 ,entreprise1);
-    FILE *db6 = fopen("test/employe.csv", "r");
-    b=nbrligne2(db6);
-    fseek(db6,0,SEEK_SET);
-    fscanf(db6,"%*s");
-    for (int i = 0; i < b-2; i++)
-    {
+        Creer_profil2(nom1, prenom1, mail1, code_postal1, competence1, ancien_collegue1 ,entreprise1);
+        FILE *db6 = fopen("test/employe.csv", "r");
+        b=nbrligne2(db6);
+        fseek(db6,0,SEEK_SET);
+        fscanf(db6,"%*s");
+        for (int i = 0; i < b-2; i++)
+        {
+            fscanf(db6,"%s",str);
+        }
+        // printf("%s\n",str);
+        TEST(strcmp(str, "5,Valey,Martin,martvaley65@gmail.com,37893,comedie,1;6,4") == 0);
         fscanf(db6,"%s",str);
+        TEST(strcmp(str, "6,Gally,Romain,rom_clown@yahoo.fr,43783,theatre,5,4") == 0);  
+        fclose(db6);
+        // char nom2[128]="Marie";
+        // char prenom2[128]="Adrien";
+        // char mail2[128]="adrien99@outlook.fr";
+        // char code_postal2[128]="94893";
+        // char competence2[128]="SQL";
+        // char ancien_collegue2[128]="Hingrez,Alexandre";
+        // char entreprise2[128]="Twitter";
+        // char str[128];
+        // Creer_profil2(nom2, prenom2, mail2, code_postal2, competence2, ancien_collegue2,entreprise2);
     }
-    // printf("%s\n",str);
-    TEST(strcmp(str, "5,Valey,Martin,martvaley65@gmail.com,37893,comedie,1;6,4") == 0);
-    fscanf(db6,"%s",str);
-    TEST(strcmp(str, "6,Gally,Romain,rom_clown@yahoo.fr,43783,theatre,5,4") == 0);  
-    fclose(db6);
+
+    // test de Modifier_profil
+    {
+        char nom1[128]="Bartaire";
+        char prenom1[128]="Adrien";
+        char nom2[128]="Buisson";
+        char prenom2[128]="Hugo";
+        char nom3[128]="Valey";
+        char prenom3[128]="Martin";
+        char nom4[128]="Galy";
+        char prenom4[128]="Romain";
+        char entrep[128]="Disney";
+        char code[128]="12345";
+        char col[128]="Valey,Martin";
+        char col1[128]="Valey,Franck";
+        char compe[128]="Python";
+        char str[128];
+        int a,b,c,d;
+        a=1;b=2;c=3;d=4;
+        Modifier_profil2(nom1, prenom1, compe, col, code, entrep, a);
+        Modifier_profil2(nom2, prenom2, compe, col, code, entrep, c);
+        Modifier_profil2(nom3, prenom3, compe, col, code, entrep, d);
+        Modifier_profil2(nom2, prenom2, compe, col, code, entrep, b);
+        Modifier_profil2(nom4, prenom4, compe, col1, code, entrep, b);
+        FILE *db7 = fopen("test/employe.csv", "r");
+        fscanf(db7,"%s",str);
+        fscanf(db7,"%s",str);
+        TEST(strcmp(str, "1,Bartaire,Adrien,a_bartaire@google.com,13010,C;C++;Python,1,2") == 0);
+        fscanf(db7,"%s",str);
+        TEST(strcmp(str, "2,Buisson,Hugo,Buisson1999@saliege.fr,12345,bureautique,5;3;4,1") == 0);
+        fscanf(db7,"%s",str);
+        fscanf(db7,"%s",str);
+        fscanf(db7,"%s",str);
+        TEST(strcmp(str, "5,Valey,Martin,martvaley65@gmail.com,37893,comedie,1;6,1") == 0);
+        fscanf(db7,"%s",str);
+        TEST(strcmp(str, "6,Gally,Romain,rom_clown@yahoo.fr,43783,theatre,5,4") == 0);
+        fclose(db7);
+        
     }
 
      
@@ -469,6 +517,6 @@ int main()
     printf("%d/%d\n", tests_reussis, tests_executes);
 
     return tests_executes - tests_reussis;
-
+ 
 }
 
