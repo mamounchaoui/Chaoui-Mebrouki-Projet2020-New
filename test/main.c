@@ -46,12 +46,21 @@ int main()
     // tests pour 'entreprise'
     //entreprise ent1 = {4,"facebook","13008","fb@gmail.com"};
     //creer_profil_entreprise(db4,&ent1);
-int nbr = trouver_nom_ent(db4,"Twitter");
-int nbr2 = trouver_nom_ent(db4,"google");
-int nbr3 = trouver_nom_ent(db4,"azer");
+
+    int nbr = trouver_nom_ent(db4,"Twitter");
+    int nbr2 = trouver_nom_ent(db4,"google");
+    int nbr3 = trouver_nom_ent(db4,"azer");
     TEST(nbr == 3);
     TEST(nbr2 == 2);
     TEST(nbr3 == 0);
+    
+    int solution[128] = {0};
+    int competence1 = trouver_poste_par_competence(db5,"comedie",solution);
+    int competence2 = trouver_poste_par_competence(db5,"gag",solution);
+    TEST(competence1 == 3);
+    TEST(competence2 == 1);
+    supprimer_entreprise(db4,"Twitter");
+
     // tests pour 'chercheurdemploi'
     // tests nbrligne
 
