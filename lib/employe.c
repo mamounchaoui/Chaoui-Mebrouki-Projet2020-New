@@ -456,19 +456,1322 @@ void Creer_profil2(char nom[128], char prenom[128], char mail[128], char code_po
 }
 void Modifier_profil2(char nom[128], char prenom[128], char compe[128], char col[128], char code[128], char entrep[128], int choix)
 {
-    return;
+    int i,t,y,j,z,k,x,n,ok;
+    char str[128];
+    char* m2,*m3,*m4,*m5,*m6,*m7,*m8;
+    x=0 ;
+    
+    FILE* db = fopen("test/employe.csv", "r+");
+    FILE* fp = fopen("test/tmp.csv", "w");// fichier temporaire où on va recopier les données du fichier employe.csv avec les modifications apportées
+
+    n=nbrligne2(db);
+    fseek(db,0,SEEK_SET);
+    fscanf(db,"%s",str);
+    char* v="abcd";
+    v=strtok(str,",");
+    // recherche du profil à modifier
+    while (v!=NULL && x<n)
+    {
+        v=strtok(NULL,",");
+        i=0;
+        y=0;
+        while (v[i]==nom[i] && v[i]!='\0')
+        {
+            y++;
+            i++;
+
+        }
+        j=0;
+        z=0;
+        v=strtok(NULL,",");
+        while (v[j]==prenom[j] && v[j]!='\0')
+        {
+            z++;
+            j++;
+
+        }
+        t=strlen(nom);
+        k=strlen(prenom);
+        if (y==t && z==k)
+        {
+            goto modification;
+        }
+        else
+        {
+            goto next;
+        }
+        next:
+        fscanf(db,"%s",str);
+        
+        v=strtok(str,",");
+        x++;
+    }
+    modification:
+    // ajouter un compétence
+    if (choix == 1)
+    {
+        char tempo[128];
+        fseek(db,0,SEEK_SET);
+        fscanf(db,"%s",str);
+        fprintf(fp,"%s",str);
+        t=1;
+        while (t<n)
+        {                       
+            fscanf(db,"%s",str);
+            strcpy(tempo,str);
+            m2=strtok(str,",");
+            m2=strtok(NULL,",");
+            m3=strtok(NULL,",");
+            m4=strtok(NULL,",");
+            m5=strtok(NULL,",");
+            m6=strtok(NULL,",");
+            int jj=0;
+            int kk=0;
+            
+            while (kk<strlen(tempo))
+            {
+                if (tempo[kk]==',')
+                {
+                    jj++;
+                    kk++;
+                    if (jj==6)
+                    {
+                        if (tempo[kk]==',' && tempo[kk+1]!='\0')
+                        {
+                            m8=strtok(NULL,",");
+                            m7="";
+                        }
+                        else if (tempo[kk]==',' && tempo[kk+1]=='\0')
+                        {
+                            m7="";
+                            m8="";
+                        }
+                        
+                        else
+                        {
+                            int ff;
+                            char cc;
+                            m7=strtok(NULL,",");
+                            ff=kk+strlen(m7)+1;
+                            cc=tempo[ff];
+                            if (cc=='\0')
+                            {
+                                m8=" ";
+                            }
+                            else
+                            {
+                                m8=strtok(NULL,",");
+                            }
+                        }
+                        
+                        
+                    }
+                    
+                }
+                else
+                {
+                    kk++;
+                }
+                
+            } 
+
+            // si en rencontre le profil à modifier, on fait les modifications nécessaires et le recopie dans tmp       
+            if (t==x)
+            {
+                fprintf(fp,"\n%d,%s,%s,%s,%s,%s;%s,%s,%s", t, m2, m3, m4, m5, m6, compe, m7, m8);
+            }
+            // sinon on recopie sans faire aucune modification
+            else
+            {
+                fprintf(fp,"\n%d,%s,%s,%s,%s,%s,%s,%s", t, m2, m3, m4, m5, m6, m7, m8);
+            }
+            
+            t++;
+        }
+        goto fin;
+    }
+    // ajouter un collègue
+    else if (choix == 2)
+    {
+        FILE* db3=fopen("test/employe.csv", "r");
+        char str3[128];
+        char tempo[128];
+        int z,zz,ii,jj,kk,nn;
+        char* l1,*l2,*l3;
+        z=0;
+        zz=nbrligne2(db3);
+        fseek(db3,0,SEEK_SET);
+        fscanf(db3,"%*s");
+
+        while (z<zz-1)
+        {
+            ii=0;jj=0;kk=0;nn=0;ok=0;
+            fscanf(db3,"%s",str3);
+            l1=strtok(str3,",");
+            l2=strtok(NULL,",");
+            l3=strtok(NULL,",");
+
+            
+            while (col[ii]==l2[ii]  && col[ii]!='\0')
+            {
+                ii++;
+                jj++;
+            }
+            ii++;
+            while (col[ii]==l3[kk] && col[ii]!='\0')
+            {
+                ii++;
+                kk++;
+                nn++;
+            }
+
+
+            if (jj==strlen(l2) && nn==strlen(l3))
+            {
+                z=zz-2;
+                ok=1;
+            }
+            z++;
+            
+            
+        }
+        fclose(db3);
+        
+
+        fseek(db,0,SEEK_SET);
+        fscanf(db,"%s",str);
+        fprintf(fp,"%s",str);
+        t=1;
+        while (t<n)
+        {                       
+            fscanf(db,"%s",str);
+            strcpy(tempo,str);
+            m2=strtok(str,",");
+            m2=strtok(NULL,",");
+            m3=strtok(NULL,",");
+            m4=strtok(NULL,",");
+            m5=strtok(NULL,",");
+            m6=strtok(NULL,",");
+            int kk=0;
+            int jj=0;
+            while (kk<strlen(tempo))
+            {
+                if (tempo[kk]==',')
+                {
+                    jj++;
+                    kk++;
+                    if (jj==6)
+                    {
+                        if (tempo[kk]==',' && tempo[kk+1]!='\0')
+                        {
+                            m8=strtok(NULL,",");
+                            m7="";
+                        }
+                        else if (tempo[kk]==',' && tempo[kk+1]=='\0')
+                        {
+                            m7="";
+                            m8="";
+                        }
+                        
+                        else
+                        {
+                            int ff;
+                            char cc;
+                            m7=strtok(NULL,",");
+                            ff=kk+strlen(m7)+1;
+                            cc=tempo[ff];
+                            if (cc=='\0')
+                            {
+                                m8=" ";
+                            }
+                            else
+                            {
+                                m8=strtok(NULL,",");
+                            }
+                        }
+                        
+                        
+                    }
+                    
+                }
+                else
+                {
+                    kk++;
+                }
+                
+            } 
+            // cas où on recontre le profil qu'on souhaite modifier       
+            if (t==x)
+            {
+                // si on arrive pas à trouver le collègue à ajouter
+                if (ok==0 )
+                {
+                    fprintf(fp,"\n%d,%s,%s,%s,%s,%s,%s,%s", t, m2, m3, m4, m5, m6, m7, m8);
+                }
+                // collègue trouvé + profil ne contient pas de collègues + entreprise qui existe
+                else if (ok==1 && strlen(m7)==0 && strlen(m8)!=0)
+                {
+                    fprintf(fp,"\n%d,%s,%s,%s,%s,%s,%s,%s", t, m2, m3, m4, m5, m6, l1, m8);
+                }
+                // collègue trouvé + profil ne contient pas de collègues + entreprise qui n'existe pas
+                else if (ok==1 && strlen(m7)==0 && strlen(m8)==0)
+                {
+                    fprintf(fp,"\n%d,%s,%s,%s,%s,%s,%s,", t, m2, m3, m4, m5, m6, l1);
+                }
+                // cas où il n'a pas de problèmes
+                else
+                {
+                    fprintf(fp,"\n%d,%s,%s,%s,%s,%s,%s;%s,%s", t, m2, m3, m4, m5, m6, l1, m7, m8);
+                }
+                    
+            }
+            // sinom on recoprie sans modifier
+            else
+            {
+                fprintf(fp,"\n%d,%s,%s,%s,%s,%s,%s,%s", t, m2, m3, m4, m5, m6, m7, m8);
+            }
+            
+            t++;
+        }
+        goto fin;
+    }
+    // modifier le code postal
+    else if (choix == 3)
+    {
+        fseek(db,0,SEEK_SET);
+        fscanf(db,"%s",str);
+        fprintf(fp,"%s",str);
+        t=1;
+        char tempo[128];
+        while (t<n)
+        {                       
+            fscanf(db,"%s",str);
+            strcpy(tempo,str);
+            m2=strtok(str,",");
+            m2=strtok(NULL,",");
+            m3=strtok(NULL,",");
+            m4=strtok(NULL,",");
+            m5=strtok(NULL,",");
+            m6=strtok(NULL,",");
+            
+            int jj=0;
+            int kk=0;
+            
+            while (kk<strlen(tempo))
+            {
+                if (tempo[kk]==',')
+                {
+                    jj++;
+                    kk++;
+                    if (jj==6)
+                    {
+                        if (tempo[kk]==',' && tempo[kk+1]!='\0')
+                        {
+                            m8=strtok(NULL,",");
+                            m7="";
+                        }
+                        else if (tempo[kk]==',' && tempo[kk+1]=='\0')
+                        {
+                            m7="";
+                            m8="";
+                        }
+                        
+                        else
+                        {
+                            int ff;
+                            char cc;
+                            m7=strtok(NULL,",");
+                            ff=kk+strlen(m7)+1;
+                            cc=tempo[ff];
+                            if (cc=='\0')
+                            {
+                                m8=" ";
+                            }
+                            else
+                            {
+                                m8=strtok(NULL,",");
+                            }
+                        }
+                        
+                        
+                    }
+                    
+                }
+                else
+                {
+                    kk++;
+                }
+                
+            }
+            // si en rencontre le profil à modifier, on fait les modifications nécessaires et le recopie dans tmp         
+            if (t==x)
+            {
+                fprintf(fp,"\n%d,%s,%s,%s,%s,%s,%s,%s", t, m2, m3, m4, code, m6, m7, m8);
+            }
+            // sino on recopie sans modifier
+            else
+            {
+                fprintf(fp,"\n%d,%s,%s,%s,%s,%s,%s,%s", t, m2, m3, m4, m5, m6, m7, m8);
+            }
+            
+            t++;
+        }
+        goto fin;
+        
+    }
+    // modifier l'entreprise
+    else if (choix == 4)
+    {
+        FILE* db4=fopen("test/entreprise.csv", "r");
+        char str4[128];
+        int z,zz,ii,jj;
+        char* l1,*l2;
+        z=0;
+        zz=nbrligne2(db4);
+        fseek(db4,0,SEEK_SET);
+        fscanf(db4,"%*s");
+
+        while (z<zz-1)
+        {
+            ii=0;jj=0;ok=0;
+            fscanf(db4,"%s",str4);
+            l1=strtok(str4,",");
+            l2=strtok(NULL,",");
+
+            
+            while (entrep[ii]==l2[ii]  && entrep[ii]!='\0')
+            {
+                ii++;
+                jj++;
+            }
+           
+            if (jj==strlen(l2) && jj==strlen(entrep))
+            {
+                z=zz-2;
+                ok=1;
+            }
+            z++;
+            
+            
+        }
+        fclose(db4);
+        
+
+        fseek(db,0,SEEK_SET);
+        fscanf(db,"%s",str);
+        fprintf(fp,"%s",str);
+        t=1;
+        char tempo[128];
+        while (t<n)
+        {                       
+            fscanf(db,"%s",str);
+            strcpy(tempo,str);
+            m2=strtok(str,",");
+            m2=strtok(NULL,",");
+            m3=strtok(NULL,",");
+            m4=strtok(NULL,",");
+            m5=strtok(NULL,",");
+            m6=strtok(NULL,",");
+            
+            int jj=0;
+            int kk=0;
+            
+            while (kk<strlen(tempo))
+            {
+                if (tempo[kk]==',')
+                {
+                    jj++;
+                    kk++;
+                    if (jj==6)
+                    {
+                        if (tempo[kk]==',' && tempo[kk+1]!='\0')
+                        {
+                            m8=strtok(NULL,",");
+                            m7="";
+                        }
+                        else if (tempo[kk]==',' && tempo[kk+1]=='\0')
+                        {
+                            m7="";
+                            m8="";
+                        }
+                        
+                        else
+                        {
+                            int ff;
+                            char cc;
+                            m7=strtok(NULL,",");
+                            ff=kk+strlen(m7)+1;
+                            cc=tempo[ff];
+                            if (cc=='\0')
+                            {
+                                m8=" ";
+                            }
+                            else
+                            {
+                                m8=strtok(NULL,",");
+                            }
+                        }
+                        
+                        
+                    }
+                    
+                }
+                else
+                {
+                    kk++;
+                }
+                
+            }
+            // si en rencontre le profil à modifier          
+            if (t==x)
+            {
+                // cas où le profil ne contient pas d'entreprise
+                if (ok==0)
+                {
+                    fprintf(fp,"\n%d,%s,%s,%s,%s,%s,%s,%s", t, m2, m3, m4, m5, m6, m7, m8);
+                }
+                // cas où le profil ne contient une entreprise
+                else
+                {
+                    fprintf(fp,"\n%d,%s,%s,%s,%s,%s,%s,%s", t, m2, m3, m4, m5, m6, m7, l1);
+                }
+                
+                
+            }
+            // sinon on recopie sans modifier
+            else
+            {
+                fprintf(fp,"\n%d,%s,%s,%s,%s,%s,%s,%s", t, m2, m3, m4, m5, m6, m7, m8);
+            }
+            
+            t++;
+        }
+        goto fin;
+        
+    }
+       
+    fin:
+    fclose(db);
+    fclose(fp);
+    remove("test/employe.csv");
+    rename("test/tmp.csv","test/employe.csv");
 }
 void Transitionner_profil2(char nom[128], char prenom[128])
 {
+    char str1[128];
+    // char str2[128];
+    char* v1,*v2,*v3,*v4,*v5,*v6,*v7;
+    int pos,ok1;
+    char t[128];
+    char tempo[128];
+
+    FILE* db1=fopen("test/employe.csv", "r+");
+    FILE* db2=fopen("test/chercheurdemploi.csv", "r+");
+    FILE* db3=fopen("test/tmp.csv", "w");
+
+    int a,b;
+    a=nbrligne2(db1);
+    b=nbrligne2(db2);
+
+    fseek(db1,0,SEEK_SET);
+    // fseek(db2,0,SEEK_SET);
+    fscanf(db1,"%*s");
+    // fscanf(db2,"%*s");
+    int c,d,e,f;
+    c=0;ok1=0;
+    while (c<a-1)
+    {
+        d=0;e=0;f=0;
+        fscanf(db1,"%s",str1);
+        strcpy(tempo,str1);
+        v1=strtok(str1,",");
+        v2=strtok(NULL,",");
+        v3=strtok(NULL,",");
+        v4=strtok(NULL,",");
+        v5=strtok(NULL,",");
+        v6=strtok(NULL,",");
+        // v7=strtok(NULL,",");
+        int kk=0;
+            int jj=0;
+            //cette boucle permet de savoir si cette personne a des anciens collègues ou pas
+            while (kk<strlen(tempo))
+            {
+                if (tempo[kk]==',')
+                {
+                    jj++;
+                    kk++;
+                    if (jj==6)
+                    {
+                        //ca soù la personne n'a pas d'anciens collègues
+                        if (tempo[kk-1]==',' && tempo[kk]=='\0')
+                        {
+                            v7="";
+                        }
+                        
+                        // cas où la personne a au moins un ancien collègue
+                        else
+                        {
+                            v7=strtok(NULL,",");
+                        }
+                        
+                        
+                    }
+                    
+                }
+                else
+                {
+                    kk++;
+                }
+            }
+
+        while (v2[d]==nom[d] && v2[d]!='\0' && nom[d]!='\0')
+        {
+            d++;
+            e++;
+        }
+        d=0;
+
+        while (v3[d]==prenom[d] && v3[d]!='\0' && prenom[d]!='\0')
+        {
+            d++;
+            f++;
+        }
+
+        if (e==strlen(v2) && e==strlen(nom) && f==strlen(v3) && f==strlen(prenom))
+        {
+            ok1++;
+            pos=c;
+            c=a-1;
+            fseek(db2,0,SEEK_END);
+            fprintf(db2,"\n%d,%s,%s,%s,%s,%s,%s",b,v2,v3,v4,v5,v6,v7);
+        }   
+        c++;
+        if (c==a-1 && ok1==0)
+        {
+            printf("nous n'avons pas pu vous identifier\n");
+            return;
+        }
+        strcpy(t,v1);
+    }
+    char* x2,*x3,*x4,*x5,*x6,*x7,*x8;
+    fseek(db1,0,SEEK_SET);
+    fscanf(db1,"%s",str1);
+    fprintf(db3,"%s",str1);
+    int g;
+    g=0;
+    while (g<a-2)
+    {
+        fscanf(db1,"%s",str1);
+        if (g==pos)
+        {
+            fscanf(db1,"%s",str1);
+        }
+        strcpy(tempo,str1);
+        x2=strtok(str1,",");
+        x2=strtok(NULL,",");
+        x3=strtok(NULL,",");
+        x4=strtok(NULL,",");
+        x5=strtok(NULL,",");
+        x6=strtok(NULL,",");
+        // x7=strtok(NULL,",");
+        // x8=strtok(NULL,",");
+        // fscanf(db1,"%s",str1);
+        int jj=0;
+            int kk=0;
+            
+            while (kk<strlen(tempo))
+            {
+                // c=tmp[k];
+                // printf("%c\n",c);
+                if (tempo[kk]==',')
+                {
+                    jj++;
+                    kk++;
+                    if (jj==6)
+                    {
+                        if (tempo[kk]==',' && tempo[kk+1]!='\0')
+                        {
+                            x8=strtok(NULL,",");
+                            x7="";
+                        }
+                        else if (tempo[kk]==',' && tempo[kk+1]=='\0')
+                        {
+                            x7="";
+                            x8="";
+                        }
+                        
+                        else
+                        {
+                            int ff;
+                            char cc;
+                            x7=strtok(NULL,",");
+                            ff=kk+strlen(x7)+1;
+                            cc=tempo[ff];
+                            printf("%c\n",cc);
+                            if (cc=='\0')
+                            {
+                                x8=" ";
+                            }
+                            else
+                            {
+                                x8=strtok(NULL,",");
+                            }
+                        }
+                        
+                        
+                    }
+                    
+                }
+                else
+                {
+                    kk++;
+                }
+                
+            }
+        fprintf(db3,"\n%d,%s,%s,%s,%s,%s,%s,%s",g+1,x2,x3,x4,x5,x6,x7,x8);
+        g++;
+    }
+    
+    
+    fclose(db1);
+    fclose(db2);
+    fclose(db3);
+
+    remove("test/employe.csv");
+    rename("test/tmp.csv","test/employe.csv");
+
+    char str4[128];
+    char str5[128];
+    char *w1,*w2,*w3,*w4,*w5,*w6,*w7,*w8;
+    FILE* db4=fopen("test/chercheurdemploi.csv", "r");
+    FILE* db5=fopen("test/employe.csv", "r");
+    FILE* db6=fopen("test/tmp1.csv", "w");
+    FILE* db7=fopen("test/tmp2.csv", "w");
+
+    int h,i;
+    h=nbrligne2(db4);
+    i=nbrligne2(db5);
+
+    fseek(db4,0,SEEK_SET);
+    fseek(db5,0,SEEK_SET);
+
+    fscanf(db4,"%s",str4);
+    fprintf(db6,"%s",str4);
+
+    fscanf(db5,"%s",str5);
+    fprintf(db7,"%s",str5);
+
+    int j,k,l,m,n,p;
+    char v[128];
+    // char vv[128];
+    j=0;
+    char cc;
+    while (j<h-1)
+    {
+        k=0;l=0;m=0;p=0;
+        fscanf(db4,"%s",str4);
+        strcpy(tempo,str4);
+        w1=strtok(str4,",");
+        w2=strtok(NULL,",");
+        w3=strtok(NULL,",");
+        w4=strtok(NULL,",");
+        w5=strtok(NULL,",");
+        w6=strtok(NULL,",");
+        // w7=strtok(NULL,",");
+
+        int kk=0;
+            int jj=0;
+            //cette boucle permet de savoir si cette personne a des anciens collègues ou pas
+            while (kk<strlen(tempo))
+            {
+                if (tempo[kk]==',')
+                {
+                    jj++;
+                    kk++;
+                    if (jj==6)
+                    {
+                        //ca soù la personne n'a pas d'anciens collègues
+                        if (tempo[kk-1]==',' && tempo[kk]=='\0')
+                        {
+                            w7="";
+                        }
+                        
+                        // cas où la personne a au moins un ancien collègue
+                        else
+                        {
+                            w7=strtok(NULL,",");
+                        }
+                        
+                        
+                    }
+                    
+                }
+                else
+                {
+                    kk++;
+                }
+            }
+        
+
+        while (w7[k]!='\0' )
+        {
+            cc=w7[k];
+            printf("%c\n",cc);
+            if(w7[k]==t[l])
+            {
+                k++;
+                l++;
+                m++;
+                if (m==strlen(t))
+                {
+                    goto suiv;
+                }
+                
+            }
+            else
+            {
+                k++;
+                l=0;
+                m=0;
+            }
+        }
+
+        suiv:
+        if (m==strlen(t) && m!=strlen(w7))
+        {
+            n=k-m-1;
+            cc=w7[n];
+            printf("%c\n",cc);
+            if (w7[n]==';' && w7[k]==';')
+            {
+                while (p<n)
+                {
+                    v[p]=w7[p];
+                    p++;
+                }
+                while (w7[k]!='\0')
+                {
+                    v[p]=w7[k];
+                    p++;
+                    k++;
+                }
+                v[p]='\0';   
+                fprintf(db6,"\n%s,%s,%s,%s,%s,%s,%s",w1, w2, w3, w4, w5, w6, v);
+            }
+            else if (w7[n]!=';' && w7[k]==';')
+            {
+                k++;
+                while (w7[k]!='\0')
+                {
+                    v[p]=w7[k];
+                    p++;
+                    k++;
+                }
+                // strcpy(vv,v);
+                v[p]='\0';
+                printf("%s\n",v);
+                fprintf(db6,"\n%s,%s,%s,%s,%s,%s,%s",w1, w2, w3, w4, w5, w6, v);
+            }
+            else if (w7[n]==';' && w7[k]=='\0')
+            {
+                while (p<n)
+                {
+                    v[p]=w7[p];
+                    p++;
+                }
+                v[p]='\0';
+                fprintf(db6,"\n%s,%s,%s,%s,%s,%s,%s",w1, w2, w3, w4, w5, w6, v);
+            }
+                    
+        }
+        else if (m==strlen(t) && m==strlen(w7))
+        {
+            fprintf(db6,"\n%s,%s,%s,%s,%s,%s,",w1, w2, w3, w4, w5, w6);
+        }
+            
+        else
+        {
+            fprintf(db6,"\n%s,%s,%s,%s,%s,%s,%s",w1, w2, w3, w4, w5, w6, w7);
+        }
+            
+        j++;
+    }
+
+    j=0;
+    while (j<i-1)
+    {
+        k=0;l=0;m=0;p=0;
+        fscanf(db5,"%s",str5);
+        strcpy(tempo,str5);
+        w1=strtok(str5,",");
+        w2=strtok(NULL,",");
+        w3=strtok(NULL,",");
+        w4=strtok(NULL,",");
+        w5=strtok(NULL,",");
+        w6=strtok(NULL,",");
+        // w7=strtok(NULL,",");
+        // w8=strtok(NULL,",");
+
+        int jj=0;
+            int kk=0;
+            
+            while (kk<strlen(tempo))
+            {
+                // c=tmp[k];
+                // printf("%c\n",c);
+                if (tempo[kk]==',')
+                {
+                    jj++;
+                    kk++;
+                    if (jj==6)
+                    {
+                        if (tempo[kk]==',' && tempo[kk+1]!='\0')
+                        {
+                            w8=strtok(NULL,",");
+                            w7="";
+                        }
+                        else if (tempo[kk]==',' && tempo[kk+1]=='\0')
+                        {
+                            w7="";
+                            w8="";
+                        }
+                        
+                        else
+                        {
+                            int ff;
+                            char cc;
+                            w7=strtok(NULL,",");
+                            ff=kk+strlen(w7)+1;
+                            cc=tempo[ff];
+                            printf("%c\n",cc);
+                            if (cc=='\0')
+                            {
+                                w8=" ";
+                            }
+                            else
+                            {
+                                w8=strtok(NULL,",");
+                            }
+                        }
+                        
+                        
+                    }
+                    
+                }
+                else
+                {
+                    kk++;
+                }
+                
+            }
+
+        while (w7[k]!='\0' )
+        {
+            cc=w7[k];
+            printf("%c\n",cc);
+            if(w7[k]==t[l])
+            {
+                k++;
+                l++;
+                m++;
+                if (m==strlen(t))
+                {
+                    goto suiv2;
+                }
+                
+            }
+            else
+            {
+                k++;
+                l=0;
+                m=0;
+            }
+        }
+
+        suiv2:
+        if (m==strlen(t) && m!=strlen(w7))
+        {
+            n=k-m-1;
+            cc=w7[n];
+            printf("%c\n",cc);
+            if (w7[n]==';' && w7[k]==';')
+            {
+                while (p<n)
+                {
+                    v[p]=w7[p];
+                    p++;
+                }
+                while (w7[k]!='\0')
+                {
+                    v[p]=w7[k];
+                    p++;
+                    k++;
+                }
+                v[p]='\0';   
+                fprintf(db7,"\n%s,%s,%s,%s,%s,%s,%s,%s",w1, w2, w3, w4, w5, w6, v,w8);
+            }
+            else if (w7[n]!=';' && w7[k]==';')
+            {
+                k++;
+                while (w7[k]!='\0')
+                {
+                    v[p]=w7[k];
+                    p++;
+                    k++;
+                }
+                // strcpy(vv,v);
+                v[p]='\0';
+                printf("%s\n",v);
+                fprintf(db7,"\n%s,%s,%s,%s,%s,%s,%s,%s",w1, w2, w3, w4, w5, w6, v, w8);
+            }
+            else if (w7[n]==';' && w7[k]=='\0')
+            {
+                while (p<n)
+                {
+                    v[p]=w7[p];
+                    p++;
+                }
+                v[p]='\0';
+                fprintf(db7,"\n%s,%s,%s,%s,%s,%s,%s,%s",w1, w2, w3, w4, w5, w6, v, w8);
+            }
+                    
+        }
+        else if (m==strlen(t) && m==strlen(w7))
+        {
+            fprintf(db7,"\n%s,%s,%s,%s,%s,%s,,%s",w1, w2, w3, w4, w5, w6, w8);
+        }
+            
+        else
+        {
+            fprintf(db7,"\n%s,%s,%s,%s,%s,%s,%s,%s",w1, w2, w3, w4, w5, w6, w7, w8);
+        }
+            
+        j++;
+    }
+    fclose(db6);
+    fclose(db7);
+    remove("test/chercheurdemploi.csv");
+    rename("test/tmp1.csv","test/chercheurdemploi.csv");
+    remove("test/employe.csv");
+    rename("test/tmp2.csv","test/employe.csv");
+
     return;
+
 }
 void Supprimer_profil2(char nom[128], char prenom[128])
 {
+    int i,t,y,j,z,k,x;
+    char str[128];
+    x=0;
+    FILE* db=fopen("test/employe.csv", "r+");
+    int w=nbrligne2(db);
+    FILE* fp;
+    fp=fopen("test/tmp.csv", "w");
+    fseek(db,0,SEEK_SET);
+    char* t1,*t2,*t3,*t4,*t5,*t6,*t7,*t8;
+    // fscanf(db,"%s",str);
+    fscanf(db,"%*s");
+    char* v1,*v2,*v3;
+    char tt[128];
+    char tempo[128];
+    int ok;
+    while (x<w-1 )
+    {
+        fscanf(db,"%s",str);
+        ok=0;
+        v1=strtok(str,",");
+        v2=strtok(NULL,",");
+        i=0;
+        y=0;
+        while (v2[i]==nom[i] && v2[i]!='\0')
+        {
+            y++;
+            i++;
+
+        }
+        j=0;
+        z=0;
+        v3=strtok(NULL,",");
+        while (v3[j]==prenom[j] && v3[j]!='\0')
+        {
+            z++;
+            j++;
+
+        }
+        t=strlen(nom);
+        k=strlen(prenom);
+        if (y==t && z==k && k==strlen(v3) && y==strlen(v2))
+        {
+            ok=1;
+            strcpy(tt,v1);
+            fseek(db,0,SEEK_SET);
+            fscanf(db,"%s",str);
+            fprintf(fp,"%s",str);
+            int m=1;
+            while (m<w-1)
+            {   
+                if (m==x+1)
+                {
+                    fscanf(db,"%s",str);
+                }
+                             
+                fscanf(db,"%s",str);
+                strcpy(tempo,str);
+                t2=strtok(str,",");
+                t2=strtok(NULL,",");
+                t3=strtok(NULL,",");
+                t4=strtok(NULL,",");
+                t5=strtok(NULL,",");
+                t6=strtok(NULL,",");
+                
+                int jj=0;
+                int kk=0;
+                
+                while (kk<strlen(tempo))
+                {
+                    // c=tmp[k];
+                    // printf("%c\n",c);
+                    if (tempo[kk]==',')
+                    {
+                        jj++;
+                        kk++;
+                        if (jj==6)
+                        {
+                            if (tempo[kk]==',' && tempo[kk+1]!='\0')
+                            {
+                                t8=strtok(NULL,",");
+                                t7="";
+                            }
+                            else if (tempo[kk]==',' && tempo[kk+1]=='\0')
+                            {
+                                t7="";
+                                t8="";
+                            }
+                            
+                            else
+                            {
+                                int ff;
+                                char cc;
+                                t7=strtok(NULL,",");
+                                ff=kk+strlen(t7)+1;
+                                cc=tempo[ff];
+                                printf("%c\n",cc);
+                                if (cc=='\0')
+                                {
+                                    t8="";
+                                }
+                                else
+                                {
+                                    t8=strtok(NULL,",");
+                                }
+                                
+                                
+                            }
+                            
+                            
+                        }
+                        
+                    }
+                    else
+                    {
+                        kk++;
+                    }
+                    
+                }
+                
+                fprintf(fp,"\n%d,%s,%s,%s,%s,%s,%s,%s", m, t2, t3, t4, t5, t6, t7, t8);
+                m++;
+                
+                
+            }
+            
+            goto fin;
+        }
+        else
+        {
+            goto next;
+        }
+        next:
+        // fscanf(db,"%*s");
+        x++;
+        if (x==w-1 && ok==0)
+        {
+            printf("on arrive pas à vous identifier\n");
+            goto fin2;
+        }
+        
+    }
+    fin:
+    fclose(db);
+    fclose(fp);
+    remove("test/employe.csv");
+    rename("test/tmp.csv","test/employe.csv");
+
+    char str2[128];
+    FILE* db1=fopen("test/employe.csv", "r+");
+    FILE* db2=fopen("test/tmp1.csv", "w");
+
+    int aa;
+    aa=nbrligne2(db1);
+    fseek(db1,0,SEEK_SET);
+    fscanf(db1,"%s",str2);
+    fprintf(db2,"%s",str2);
+    char v[128];
+    // char tt[128];
+    int l,m,n,p;
+    int bb=0;
+    while (bb<aa-1)
+    {
+        k=0;l=0;m=0;p=0;
+        fscanf(db1,"%s",str2);
+        strcpy(tempo,str2);
+        t1=strtok(str2,",");
+        t2=strtok(NULL,",");
+        t3=strtok(NULL,",");
+        t4=strtok(NULL,",");
+        t5=strtok(NULL,",");
+        t6=strtok(NULL,",");
+        int jj=0;
+        int kk=0;
+                
+        while (kk<strlen(tempo))
+        {
+            if (tempo[kk]==',')
+            {
+                jj++;
+                kk++;
+                if (jj==6)
+                {
+                    if (tempo[kk]==',' && tempo[kk+1]!='\0')
+                    {
+                        t8=strtok(NULL,",");
+                        t7="";
+                    }
+                    else if (tempo[kk]==',' && tempo[kk+1]=='\0')
+                    {
+                        t7="";
+                        t8="";
+                    }
+                            
+                    else
+                    {
+                        int ff;
+                        char cc;
+                        t7=strtok(NULL,",");
+                        ff=kk+strlen(t7)+1;
+                        cc=tempo[ff];
+                        printf("%c\n",cc);
+                        if (cc=='\0')
+                        {
+                            t8=" ";
+                        }
+                        else
+                        {
+                            t8=strtok(NULL,",");
+                        }
+                    }
+                            
+                            
+                }
+                        
+            }
+            else
+            {
+                kk++;
+            }
+                    
+        }
+
+        while (t7[k]!='\0' )
+        {
+            if(t7[k]==tt[l])
+            {
+                k++;
+                l++;
+                m++;
+                if (m==strlen(tt))
+                {
+                    goto suiv2;
+                }
+                
+            }
+            else
+            {
+                k++;
+                l=0;
+                m=0;
+            }
+        }
+
+        suiv2:
+        if (m==strlen(tt) && m!=strlen(t7))
+        {
+            n=k-m-1;
+            if (t7[n]==';' && t7[k]==';')
+            {
+                while (p<n)
+                {
+                    v[p]=t7[p];
+                    p++;
+                }
+                while (t7[k]!='\0')
+                {
+                    v[p]=t7[k];
+                    p++;
+                    k++;
+                }
+                v[p]='\0';   
+                fprintf(db2,"\n%s,%s,%s,%s,%s,%s,%s,%s",t1, t2, t3, t4, t5, t6, v,t8);
+            }
+            else if (t7[n]!=';' && t7[k]==';')
+            {
+                k++;
+                while (t7[k]!='\0')
+                {
+                    v[p]=t7[k];
+                    p++;
+                    k++;
+                }
+                // strcpy(vv,v);
+                v[p]='\0';
+                // printf("%s\n",v);
+                fprintf(db2,"\n%s,%s,%s,%s,%s,%s,%s,%s",t1, t2, t3, t4, t5, t6, v, t8);
+            }
+            else if (t7[n]==';' && t7[k]=='\0')
+            {
+                while (p<n)
+                {
+                    v[p]=t7[p];
+                    p++;
+                }
+                v[p]='\0';
+                fprintf(db2,"\n%s,%s,%s,%s,%s,%s,%s,%s",t1, t2, t3, t4, t5, t6, v, t8);
+            }
+                    
+        }
+        else if (m==strlen(tt) && m==strlen(t7))
+        {
+            fprintf(db2,"\n%s,%s,%s,%s,%s,%s,,%s",t1, t2, t3, t4, t5, t6, t8);
+        }
+            
+        else
+        {
+            fprintf(db2,"\n%s,%s,%s,%s,%s,%s,%s,%s",t1, t2, t3, t4, t5, t6, t7, t8);
+        }
+            
+        bb++;
+    }
+    fclose(db1);
+    fclose(db2);
+    remove("test/employe.csv");
+    rename("test/tmp1.csv","test/employe.csv");
+
+    fin2:
     return;
 }
 void Recherche_par_poste2(char nom[128], char prenom[128], int choix)
 {
-    return;
+   return;
 }
 void Rechercher_par_anciencollegue2(char nom[128], char prenom[128], char entreprise[128], int choix)
 {
