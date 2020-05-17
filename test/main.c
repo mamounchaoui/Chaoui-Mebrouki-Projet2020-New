@@ -41,10 +41,17 @@ int main()
 {
     FILE *db1 = fopen("test/chercheurdemploi.csv", "r");
     FILE *db3 = fopen("test/employe.csv", "r");
-    FILE *db4 = fopen("test/entreprise.csv", "r");
+    FILE *db4 = fopen("test/entreprise.csv", "r+");
     FILE *db5 = fopen("test/poste.csv", "r");
     // tests pour 'entreprise'
-
+    //entreprise ent1 = {4,"facebook","13008","fb@gmail.com"};
+    //creer_profil_entreprise(db4,&ent1);
+int nbr = trouver_nom_ent(db4,"Twitter");
+int nbr2 = trouver_nom_ent(db4,"google");
+int nbr3 = trouver_nom_ent(db4,"azer");
+    TEST(nbr == 3);
+    TEST(nbr2 == 2);
+    TEST(nbr3 == 0);
     // tests pour 'chercheurdemploi'
     // tests nbrligne
 

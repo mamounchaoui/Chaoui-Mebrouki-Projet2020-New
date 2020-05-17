@@ -88,7 +88,9 @@ void supprimer_poste(FILE* fic, char* titre)
 int trouver_nom_ent(FILE* fic,char* nomEnt)
 {
     int l=0,i=0,j,flag=0;
-    char chunk[128],Nom[128],retour[128];
+    char chunk[128] = {0};
+    char Nom[128] = {0};
+    char retour[128] = {0};
 
     fseek(fic,0,SEEK_SET);
     while(fgets(chunk, sizeof(chunk), fic) != NULL) {
