@@ -512,6 +512,127 @@ int main()
         
     }
 
+    // test de Transitionner_profil2
+    {
+        char nom[128]="Buisson";
+        char prenom[128]="Hugo";
+        char str[128];
+        char* v1,*v2;
+        Transitionner_profil2(nom, prenom);
+        FILE *db8 = fopen("test/employe.csv", "r");
+        int a=nbrligne2(db8);
+        fseek(db8,0,SEEK_SET);
+        fscanf(db8,"%*s");
+        for (int i = 0; i <a-1 ; i++)
+        {
+            fscanf(db8,"%s",str);
+            v1=strtok(str,",");
+            v1=strtok(NULL,",");
+            v2=strtok(NULL,",");
+            TEST(strcmp(v1, "Buisson") != 0);
+            TEST(strcmp(v2, "Hugo") != 0);
+        }
+
+        fseek(db8,0,SEEK_SET);
+        fscanf(db8,"%*s");
+        for (int i = 0; i <a-3 ; i++)
+        {
+            fscanf(db8,"%s",str);
+        }
+        // avant de Transitionner le profil:4,Defritsh,Gaetan,defgaetan98@hotmail.fr,33003,theatre,3;1;2,1
+        TEST(strcmp(str, "3,Defritsh,Gaetan,defgaetan98@hotmail.fr,33003,theatre,2;1,1") == 0);
+        // on remarque que 2 a été supprimé de l'attribut collegue car c'était l'id de Buisson Hugo
+        // et qu'on à 2 à la place de 3 ce qui est normal car les id qui suivent l'id du profil transitionné 
+        // vont tous être décrémentés.
+        // idem dans le fichier chercheurdemploi.csv
+        fclose(db8);
+    }
+
+    // test Supprimer_profil2
+    {
+        char nom[128]="Defritsh";
+        char prenom[128]="Gaetan";
+        char str[128];
+        char* v1,*v2;
+        Supprimer_profil2(nom, prenom);
+        FILE *db9 = fopen("test/employe.csv", "r");
+        int a=nbrligne2(db9);
+        fseek(db9,0,SEEK_SET);
+        fscanf(db9,"%*s");
+        for (int i = 0; i <a-1 ; i++)
+        {
+            fscanf(db9,"%s",str);
+            v1=strtok(str,",");
+            v1=strtok(NULL,",");
+            v2=strtok(NULL,",");
+            TEST(strcmp(v1, "Defritsh") != 0);
+            TEST(strcmp(v2, "Gaetan") != 0);
+        }
+
+        fseek(db9,0,SEEK_SET);
+        fscanf(db9,"%*s");
+        for (int i = 0; i <a ; i++)
+        {
+            fscanf(db9,"%s",str);
+        }
+        // avant de Transitionner le profil:4,Gally,Romain,rom_clown@yahoo.fr,43783,theatre,4,4
+        TEST(strcmp(str, "4,Gally,Romain,rom_clown@yahoo.fr,43783,theatre,3,4") == 0);
+        // on remarque qu'on à 3 à la place de 4 au niveau de l'attribut collegues ce qui est normal car les id 
+        // qui suivent l'id du profil supprimés vont tous être décrémentés.
+        fclose(db9);
+    }
+    
+    // char entreprise[128]="Google";
+    // Transitionner_profil2(nom,prenom);
+
+    // Supprimer_profil2(nom, prenom);
+
+    // int tab[4]={1,2,3,4};
+    // char v[20];
+    // int k=0;
+    // // v="a";
+    // for (int i = 0; i < 4; i++)
+    // {
+    //     v[k]=tab[i];
+    //     v[k+1]=';';
+    //     k++;
+    // }
+    // printf("%s\n",v);
+    // char buffer[50]; 
+    // // int a = 10, b = 20, c; 
+    // // c = a + b; 
+    // int tab[128]={1,2,3,4};
+    // char v[50];
+    // int a,b;
+    // a=0;
+    // // v="z";
+    // // sprintf(buffer, "%d;%d;%d", a, b, c); 
+    // for (int i = 0; i < 4; i++)
+    // {
+    //     b=0;
+    //     if (i==3)
+    //     {
+    //         sprintf(buffer, "%d",tab[i]);
+    //     }
+    //     else
+    //     {
+    //         sprintf(buffer, "%d;",tab[i]);
+    //     }
+        
+        
+    //     while(b<strlen(buffer)){
+    //         v[a]=buffer[b];
+    //         b++;
+    //         a++;
+    //     }
+    // }
+    
+  
+    // // The string "sum of 10 and 20 is 30" is stored  
+    // // into buffer instead of printing on stdout 
+    // printf("%s\n", v); 
+  
+    // return 0; 
      
 
     printf("%d/%d\n", tests_reussis, tests_executes);
