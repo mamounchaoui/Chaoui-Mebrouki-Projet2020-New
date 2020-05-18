@@ -19,6 +19,15 @@ typedef struct poste
     struct entreprise *ent;
 } poste;
 
+typedef struct chercheurEmploi
+{
+    int index;
+    char *nom;
+    char *Prenom;
+    char *mail;
+    char *codepostal;
+} chercheurEmploi;
+
 //Objectif : Créer une entreprise a partir de la structure fourni en input. On ecrit a la suite dans un fichier csv. 
 // Entrée : fic : fichier dans lequel on écrit
 //          ent : entreprise que l'on veut crée
@@ -36,15 +45,21 @@ void creer_poste_a_pourvoir(FILE* fic, poste* unposte);
 //Objectif : Supprimer une entreprise du fichier entreprise.csv
 // Entrée : fic : fichier dans lequel on veut supprimer l'entreprise
 //          nom_ent : le nom de l'entreprise que l'on veut supprimer
-//Sortie : aucune
-void supprimer_entreprise(FILE* fic, char* nom_ent);
+//Sortie : 1 -> Suppression effectué
+//          0 -> Erreur sur le nom fourni
+int supprimer_entreprise(FILE* fic,FILE* fic2, char* nom_ent);
 
 
 //Objectif : Supprimer un poste du fichier poste.csv. On effacera le fichier crée pour le remplacer par une nouvelle version sans le poste. 
 // Entrée : fic : fichier dans lequel on veut supprimer le poste
-//          titre : l'intitulé du poste que l'on veut supprimer
-//Sortie : aucune
-void supprimer_poste(FILE* fic, char* titre);
+//          index : l'index du poste que l'on veut supprimer
+//          titre : nom du poste
+//Sortie : 1 -> Suppression effectué
+//          0 -> Erreur sur le nom fourni
+int supprimer_poste(FILE* fic, int index, char* titre);
+
+//  Supprime un poste avec seulement l'index fourni
+void supprimer_poste_index(FILE* fic, int indexEnt);
 
 
 //Objectif : Obtenir l'index correspondant au nom de l'entreprise fourni en entrée.
@@ -65,6 +80,20 @@ entreprise* get_ent(FILE* fic, int indexB);
 // Entrée : fic : fichier dans lequel on cherche
 //          competences : chaine de caractères contenant la compétence recherché
 //          entTrouve : tableau contenant les index des postes qui contiennent la competence recherché
-//Sortie : Structure entreprise correspondant a l'index donné
+//Sortie : Le nombre de profil correspondant
 int trouver_poste_par_competence(FILE* fic, char* competence, int entTrouve[128]);
 
+// Objectif : Trouver dans le fichier chercheur demploi un chercheur demploi qui possede la compétence
+int trouver_emploi_par_competence(FILE* fic, char* competencess, int emploiTrouve[128]);
+
+// Objectif : Trouver dans le fichier chercheur demploi un chercheur demploi qui possede le code postal
+int trouver_emploi_par_codep(FILE* fic, char* codepp, int emploiTrouve[128]);
+
+// Objectif : Trouver dans le fichier chercheur demploi un chercheur demploi qui possede la compétence et le code postal
+int trouver_emploi_par_competcode(FILE* fic, char* comp,char* codepos, int emploiTrouve[128]);
+
+//Objectif : Créer une structure chercheur d'emploi à partir d'un index. 
+// Entrée : fic : fichier dans lequel on cherche
+//          indexB : l'index du chercheur d'emploi.
+//Sortie : Structure chercheurEmploi correspondant a l'index donné
+chercheurEmploi* get_emploi(FILE* fic, int indexB);
