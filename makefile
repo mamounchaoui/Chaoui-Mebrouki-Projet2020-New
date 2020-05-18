@@ -20,12 +20,18 @@ build/entreprise.o: lib/entreprise.c | build
 build/test.o: test/main.c | build
 	gcc -Wall -pedantic -Werror -g -c test/main.c -I ./lib -o build/test.o
 
+build/menu.o: lib/menu.c | build
+	gcc -Wall -pedantic -Werror -g -c lib/menu.c -I ./lib -o build/menu.o
+
 build/libentreprise.a: build/entreprise.o build/employe.o build/chercheurdemploi.o | build
 	ar crs build/libentreprise.a build/entreprise.o build/employe.o build/chercheurdemploi.o
 	
 build/test: build/test.o build/libentreprise.a | build
 	gcc build/test.o -Lbuild/ -lentreprise -o build/test
 
+build/menu: build/menu.o build/libentreprise.a | build
+	gcc build/menu.o -Lbuild/ -lentreprise -o build/menu
+
 # Lance le programme build/test.
-check: build/test
-	./build/test
+check: build/menu
+	./build/menu
