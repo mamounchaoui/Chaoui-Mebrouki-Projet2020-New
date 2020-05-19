@@ -429,6 +429,7 @@ void Transitionner_profil(char nom[128], char prenom[128], char entrep[128])
     char str1[128];
     char ajout[128];
     int o,d,e,w;
+    int okk;
     char* temp1,*temp2;
     
     FILE* db=fopen("test/chercheurdemploi.csv", "r+");
@@ -443,6 +444,7 @@ void Transitionner_profil(char nom[128], char prenom[128], char entrep[128])
     
     a=0;
     x=0;
+    okk=0;
     // recherche de l'entreprise dans la table entreprise que le chercheur d'emploi va intégrer
     while (a<y-1)
     {
@@ -458,12 +460,18 @@ void Transitionner_profil(char nom[128], char prenom[128], char entrep[128])
             d++;
         }
 
-        if (d==strlen(entrep))
+        if (d==strlen(entrep) && d==strlen(temp2))
         {
             e=1;
             a=y;
+            okk=1;
         }
-        a++;  
+        a++;
+        if (a==y-1 && okk==0)
+        {
+            temp1="";
+        }
+          
     }
     fclose(db2);
     
@@ -884,7 +892,7 @@ void Transitionner_profil(char nom[128], char prenom[128], char entrep[128])
 
         if (ll==0)
         {
-            kk=k-2;
+            kk=bb-2;
         }
         kk++;
     }
