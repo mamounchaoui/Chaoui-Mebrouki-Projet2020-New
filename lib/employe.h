@@ -28,5 +28,13 @@ void Transitionner_profil2(char nom[128], char prenom[128]);
 // supprime de l'attribut collegues toute personne qui a comme collègue le profil supprimé (dans la table employe)
 // décrémente de l'attribut collegues les id qui sont supérieurs à celui du profil transitionné (dans la table employe)
 void Supprimer_profil2(char nom[128], char prenom[128]);
+
+// cette fonction affiche les postes à pourvoir qui correspondent au profil de l'employé. Deux modes de recherches sont possibles:
+// -choix=1:Recherche par compétences (les compétences sont directement récupérées du profil de l'employé)
+// -choix=2:Recherche par compétences et code postal (les compétences et le code postal sont directement récupérés du profil de l'employé)
 void Recherche_par_poste2(char nom[128], char prenom[128], int choix);
+
+// cette fonction permet rechercher parmi les anciens collègues. Deux modes de recherches sont possibles::
+// -choix=1:Recherche par entreprise (retoune les ancien(ne)s collègues employés à l'entreprise)
+// -choix=2:Recherche par compétences (les compétences sont directement récupérées du profil de l'employé)
 void Rechercher_par_anciencollegue2(char nom[128], char prenom[128], char entreprise[128], int choix);
