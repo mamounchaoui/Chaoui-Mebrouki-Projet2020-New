@@ -277,13 +277,13 @@ int main()
         char nom1[128]="Devathaire";
         char prenom1[128]="Emannuel";
         Recherche_par_poste(nom1, prenom1, a);
-        // résultat obtenu:aucun résultat obtenu (corresspont au résultat voulu)
+        // résultat obtenu:aucun résultat obtenu (correspond au résultat voulu)
         printf("========================================================\n");
 
         char nom2[128]="Defritsh";
         char prenom2[128]="Gaetan";
         Recherche_par_poste(nom2, prenom2, a);
-        // résultat obtenu: (corresspont au résultat voulu)
+        // résultat obtenu: (correspond au résultat voulu)
         // Voici le(s) résultat(s) de votre recherche
         // le titre du poste est:acteur
         // le nom de l'entreprise:Disney
@@ -303,7 +303,7 @@ int main()
         printf("========================================================\n");
 
         Recherche_par_poste(nom2, prenom2, b);
-        // résultat obtenu: (corresspont au résultat voulu)
+        // résultat obtenu: (correspond au résultat voulu)
         // Voici le(s) résultat(s) de votre recherche
         // le titre du poste est:acteur
         // le nom de l'entreprise:Disney
@@ -317,14 +317,14 @@ int main()
         // ---------------------------------------
         printf("========================================================\n");
         Recherche_par_poste(nom, prenom, b);
-        // résultat obtenu: (corresspont au résultat voulu)
-        // résultat obtenu:aucun résultat obtenu (corresspont au résultat voulu)
+        // résultat obtenu: (correspond au résultat voulu)
+        // résultat obtenu:aucun résultat obtenu (correspond au résultat voulu)
         printf("========================================================\n");
 
         char nom3[128]="Vidal";
         char prenom3[128]="Hugo";
         Recherche_par_poste(nom3, prenom3, a);
-        // résultat obtenu: (corresspont au résultat voulu)
+        // résultat obtenu: (correspond au résultat voulu)
         // Voici le(s) résultat(s) de votre recherche
         // le titre du poste est:developpeur
         // le nom de l'entreprise:Google
@@ -334,15 +334,15 @@ int main()
         printf("========================================================\n");
 
         Recherche_par_poste(nom3, prenom3, b);
-        // résultat obtenu: (corresspont au résultat voulu)
-        // résultat obtenu:aucun résultat obtenu (corresspont au résultat voulu)
+        // résultat obtenu: (correspond au résultat voulu)
+        // résultat obtenu:aucun résultat obtenu (correspond au résultat voulu)
         printf("========================================================\n");
 
         char nom4[128]="Ngueuga";
         char prenom4[128]="Franck";
         Recherche_par_poste(nom4, prenom4, a);
-        // résultat obtenu: (corresspont au résultat voulu)
-        // résultat obtenu:aucun résultat obtenu (corresspont au résultat voulu)
+        // résultat obtenu: (correspond au résultat voulu)
+        // résultat obtenu:aucun résultat obtenu (correspond au résultat voulu)
         printf("========================================================\n");
     }
 
@@ -354,6 +354,7 @@ int main()
         int a,b;
         a=1;b=2;
         Rechercher_par_anciencollegue(nom, prenom, entreprise, a);
+        // résultat obtenu:(correspond au résultat voulu)
         // voici le(s) résultat(s) de votre recherche:
         // Nom du (de la) collègue:Bartaire
         // Prénom du (de la) collègue:Adrien
@@ -362,7 +363,7 @@ int main()
 
         printf("========================================================\n");
         Rechercher_par_anciencollegue(nom, prenom, entreprise, b);
-        // résultat obtenu:aucun résultat obtenu (corresspont au résultat voulu)
+        // résultat obtenu:aucun résultat obtenu (correspond au résultat voulu)
         printf("========================================================\n");
 
         char nom1[128]="Defritsh";
@@ -370,7 +371,7 @@ int main()
         char entreprise1[128]="Google";
 
         Rechercher_par_anciencollegue(nom1, prenom1, entreprise1, a);
-        // résultat obtenu:aucun résultat obtenu (corresspont au résultat voulu)
+        // résultat obtenu:(correspond au résultat voulu)
         // voici le(s) résultat(s) de votre recherche:
         // Nom du (de la) collègue:Bouvier
         // Prénom du (de la) collègue:Rodolphe
@@ -382,7 +383,7 @@ int main()
         char entreprise2[128]="Google";
 
         Rechercher_par_anciencollegue(nom2, prenom2, entreprise2, b);
-        // résultat obtenu:aucun résultat obtenu (corresspont au résultat voulu)
+        // résultat obtenu:aucun résultat obtenu (correspond au résultat voulu)
         printf("========================================================\n");
 
         char nom3[128]="Vidal";
@@ -390,7 +391,7 @@ int main()
         char entreprise3[128]="Google";
 
         Rechercher_par_anciencollegue(nom3, prenom3, entreprise3, a);
-        // résultat obtenu:aucun résultat obtenu (corresspont au résultat voulu)
+        // résultat obtenu:(correspond au résultat voulu)
         // voici le(s) résultat(s) de votre recherche:
         // voici le(s) résultat(s) de votre recherche:
         // Nom du (de la) collègue:Bartaire
@@ -400,7 +401,7 @@ int main()
         printf("========================================================\n");
 
         Rechercher_par_anciencollegue(nom3, prenom3, entreprise3, b);
-        // résultat obtenu:aucun résultat obtenu (corresspont au résultat voulu)
+        // résultat obtenu:(correspond au résultat voulu)
         // voici le(s) résultat(s) de votre recherche:
         // voici le(s) résultat(s) de votre recherche:
         // Nom du (de la) collègue:Bartaire
@@ -582,62 +583,95 @@ int main()
         fclose(db9);
     }
     
-    // char entreprise[128]="Google";
-    // Transitionner_profil2(nom,prenom);
+    // test de Recherche_par_poste2
+    {
+        char nom1[128]="Bartaire";
+        char prenom1[128]="Adrien";
+        int a,b;
+        a=1;b=2;
+        Recherche_par_poste2(nom1, prenom1, a);
+        // résultat obtenu:(correspond au résultat voulu)
+        // Voici le(s) résultat(s) de votre recherche
+        // le titre du poste est:developpeur
+        // le nom de l'entreprise:Google
+        // l'adresse mail de l'entreprise est:emplois@google.com
+        // le code postal de l'entreprise est:75009
+        // ---------------------------------------
+        printf("==================================================\n");
+        char nom2[128]="Bouvier";
+        char prenom2[128]="Rodolphe";
+        Recherche_par_poste2(nom2, prenom2, a);
+        // résultat obtenu:(correspond au résultat voulu)
+        // Voici le(s) résultat(s) de votre recherche
+        // le titre du poste est:acteur
+        // le nom de l'entreprise:Disney
+        // l'adresse mail de l'entreprise est:walt@disney.com
+        // le code postal de l'entreprise est:77700
+        // ---------------------------------------
+        // le titre du poste est:comedien
+        // le nom de l'entreprise:Twitter
+        // l'adresse mail de l'entreprise est:emps@google.com
+        // le code postal de l'entreprise est:75029
+        // ---------------------------------------
+        // le titre du poste est:humouriste
+        // le nom de l'entreprise:Comedieclub
+        // l'adresse mail de l'entreprise est:comclub@yahoo.fr
+        // le code postal de l'entreprise est:77700
+        printf("==================================================\n");
+        char nom3[128]="Gally";
+        char prenom3[128]="Romain";
+        Recherche_par_poste2(nom3, prenom3, a);
+        // résultat obtenu:aucun résultat obtenu (correspond au résultat voulu)
+        printf("==================================================\n");
+        Recherche_par_poste2(nom3, prenom3, b);
+        // résultat obtenu:aucun résultat obtenu (correspond au résultat voulu)
+        printf("==================================================\n");
+    }
 
-    // Supprimer_profil2(nom, prenom);
+    // test de Rechercher_par_anciencollegue2
+    {
+        char nom1[128]="Valey";
+        char prenom1[128]="Martin";
+        char entreprise1[128]="Comedieclub";
+        int a,b;
+        a=1;b=2;
 
-    // int tab[4]={1,2,3,4};
-    // char v[20];
-    // int k=0;
-    // // v="a";
-    // for (int i = 0; i < 4; i++)
-    // {
-    //     v[k]=tab[i];
-    //     v[k+1]=';';
-    //     k++;
-    // }
-    // printf("%s\n",v);
-    // char buffer[50]; 
-    // // int a = 10, b = 20, c; 
-    // // c = a + b; 
-    // int tab[128]={1,2,3,4};
-    // char v[50];
-    // int a,b;
-    // a=0;
-    // // v="z";
-    // // sprintf(buffer, "%d;%d;%d", a, b, c); 
-    // for (int i = 0; i < 4; i++)
-    // {
-    //     b=0;
-    //     if (i==3)
-    //     {
-    //         sprintf(buffer, "%d",tab[i]);
-    //     }
-    //     else
-    //     {
-    //         sprintf(buffer, "%d;",tab[i]);
-    //     }
-        
-        
-    //     while(b<strlen(buffer)){
-    //         v[a]=buffer[b];
-    //         b++;
-    //         a++;
-    //     }
-    // }
-    
-  
-    // // The string "sum of 10 and 20 is 30" is stored  
-    // // into buffer instead of printing on stdout 
-    // printf("%s\n", v); 
-  
-    // return 0; 
-     
+        Rechercher_par_anciencollegue2(nom1, prenom1, entreprise1, a);
+        // résultat obtenu:(correspond au résultat voulu) 
+        // Voici les résultats de votre recherche:
+        // Nom du (de la) collègue:Gally
+        // Prénom du (de la) collègue:Romain
+        // Adresse mail du (de la) collègue:rom_clown@yahoo.fr
+        // ---------------------------------------------
+        printf("==================================================\n");
+
+        char entreprise2[128]="Google";
+
+        Rechercher_par_anciencollegue2(nom1, prenom1, entreprise2, a);
+        // résultat obtenu:(correspond au résultat voulu)
+        // Voici les résultats de votre recherche:
+        // Nom du (de la) collègue:Bartaire
+        // Prénom du (de la) collègue:Adrien
+        // Adresse mail du (de la) collègue:a_bartaire@google.com
+        // ---------------------------------------------
+        printf("==================================================\n");
+        Rechercher_par_anciencollegue2(nom1, prenom1, entreprise2, b);
+        // résultat obtenu:(correspond au résultat voulu)
+        // Voici les résultats de votre recherche:
+        // Nom du (de la) collègue:Gally
+        // Prénom du (de la) collègue:Romain
+        // Adresse mail du (de la) collègue:rom_clown@yahoo.fr
+        // ---------------------------------------------
+        printf("==================================================\n");
+
+        char nom2[128]="Bouvier";
+        char prenom2[128]="Rodolphe";
+        Rechercher_par_anciencollegue2(nom2, prenom2, entreprise2, b);
+        // résultat obtenu:aucun résultat obtenu (correspond au résultat voulu)
+    }
 
     printf("%d/%d\n", tests_reussis, tests_executes);
 
     return tests_executes - tests_reussis;
- 
 }
 
