@@ -295,25 +295,38 @@ void menuEmploye(void){
                     printf("4. Modifier l'entreprise \n");
                     scanf("%d",&choix2);
                     switch(choix2){
-                         case 1:   printf("Entrez la compétence à ajouter: \n ");
+                         case 1:   printf("Entrez le nom du profil à modifier: \n ");
+                                   scanf("%s",nom);
+                                   printf("Entrez le prénom du profil à modifier: \n ");
+                                   scanf("%s",prenom);
+                                   printf("Entrez la compétence à ajouter: \n ");
                                    scanf("%s",competence);
-                                   Modifier_profil2("defaut","defaut",competence,"defaut","defaut","defaut",1);
+                                   Modifier_profil2(nom,prenom,competence,"defaut","defaut","defaut",1);
                                    break;
                          case 2:   printf("Entrez le nom du profil à modifier: \n ");
                                    scanf("%s",nom);
                                    printf("Entrez le prénom du profil à modifier: \n ");
                                    scanf("%s",prenom);
-                                   printf("Entrez le nom du collègue à ajouter: \n ");
+                                   printf("Entrez le nom et prénom du collègue à ajouter(ex : nom,prenom ): \n ");
                                    scanf("%s",collegue);
                                    Modifier_profil2(nom,prenom,"defaut",collegue,"defaut","defaut",2);
                                    break;
-                         case 3:   printf("Entrez le code postal à modifier : \n ");
+                         case 3:   printf("Entrez le nom du profil à modifier: \n ");
+                                   scanf("%s",nom);
+                                   printf("Entrez le prénom du profil à modifier: \n ");
+                                   scanf("%s",prenom);
+                                   printf("Entrez le nouveau code postal : \n ");
                                    scanf("%s",code_postal);
-                                   Modifier_profil2("defaut","defaut","defaut","defaut",code_postal,"defaut",3);
+                                   Modifier_profil2(nom,prenom,"defaut","defaut",code_postal,"defaut",3);
                                    break;
-                         case 4:   printf("Entrez le nom de l'entreprise à modifier : \n ");
+                         case 4:   
+                                   printf("Entrez le nom du profil à modifier: \n ");
+                                   scanf("%s",nom);
+                                   printf("Entrez le prénom du profil à modifier: \n ");
+                                   scanf("%s",prenom);
+                                   printf("Entrez le nouveau nom de l'entreprise : \n ");
                                    scanf("%s",entreprise);
-                                   Modifier_profil2("defaut","defaut",competence,"defaut","defaut","defaut",4);
+                                   Modifier_profil2(nom,prenom,competence,"defaut","defaut","defaut",4);
                                    break;
                          default:  printf("Erreur de saisie !");
                     }
