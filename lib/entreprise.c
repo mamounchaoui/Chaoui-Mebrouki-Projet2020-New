@@ -43,15 +43,18 @@ here:
 
 int supprimer_entreprise(FILE* fic,FILE* fic2, char* nom_ent)
 {
-    FILE * new = fopen("test/replique.csv","w");
+    
     char chunk[128]= {0};
     int l=0,i=0;
     int nbr = trouver_nom_ent(fic,nom_ent);
     char num[128] = {0};
-
-    
+    if(nbr == 0)
+        return 0;
+        
+    FILE * new = fopen("test/replique.csv","w");
     fseek(fic,0,SEEK_SET);
 if(nbr != 0){
+    
     while(fgets(chunk, sizeof(chunk), fic) != NULL)
     {   
         if(l<nbr){
@@ -76,9 +79,6 @@ if(nbr != 0){
         }
         l++;
     }
-}
-else{
-    return 0;
 }
     fclose(fic);
     fclose(new);
@@ -123,7 +123,9 @@ here:
 }
 
 int supprimer_poste(FILE* fic, int indexEnt, char* titre)
-{
+{   
+    if(indexEnt == 0)
+        return 0;
     FILE * new = fopen("test/replique.csv","w");
     char chunk[128]= {0};
     int i=0,j=0,nbrVir=0,Verif=0,conversion,retour=0;
