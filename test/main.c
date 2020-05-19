@@ -45,8 +45,45 @@ int main()
     // tests nbrligne
     FILE *db1 = fopen("test/chercheurdemploi.csv", "r");
     FILE *db3 = fopen("test/employe.csv", "r");
-    FILE *db4 = fopen("test/entreprise.csv", "r");
+    FILE *db4 = fopen("test/entreprise.csv", "r+");
     FILE *db5 = fopen("test/poste.csv", "r");
+    
+  // tests pour 'entreprise'
+    //entreprise ent1 = {4,"facebook","13008","fb@gmail.com"};
+    //creer_profil_entreprise(db4,&ent1);
+
+    int nbr = trouver_nom_ent(db4,"Twitter");
+    int nbr2 = trouver_nom_ent(db4,"Google");
+    int nbr3 = trouver_nom_ent(db4,"azer");
+    TEST(nbr == 3);
+    TEST(nbr2 == 2);
+    TEST(nbr3 == 0);
+    
+    int solution[128] = {0};
+    int competence1 = trouver_poste_par_competence(db5,"comedie",solution);
+    int competence2 = trouver_poste_par_competence(db5,"gag",solution);
+    TEST(competence1 == 3);
+    TEST(competence2 == 1);
+
+    int solution2[128] = {0};
+    int test = trouver_emploi_par_competcode(db1,"CSS","13005",solution2);
+    printf("%d postes ont été trouvés ! \n",test);
+    printf("Voici les infos des chercheurs d'emploi qui possèdent cette compétence : \n");
+    chercheurEmploi* emploi2 ;
+
+    for(int k=0;k<test;k++){
+        emploi2 = get_emploi(db1,solution2[k]);
+        printf("Prénom : "); puts(emploi2->Prenom);
+        printf("Nom : ");puts(emploi2->nom);
+        printf("Mail : ");puts(emploi2->mail);
+        printf("------------------ \n");
+    }
+    //supprimer_entreprise(db4,db5,"Twitter");
+    //supprimer_poste(db5,3,"comedien");
+    //supprimer_poste_index(db5,1);
+
+    // tests pour 'chercheurdemploi'
+    // tests nbrligne
 
     TEST(nbrligne(db1) == 4);
     TEST(nbrligne(db3) == 4);
