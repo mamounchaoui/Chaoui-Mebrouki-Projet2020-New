@@ -117,8 +117,18 @@ void Creer_profil2(char nom[128], char prenom[128], char mail[128], char code_po
             w1="";
         }
     }
+
+    if (strlen(w1)==0)
+    {
+        fseek(db1,0,SEEK_END);
+        fprintf(db1,"\n%d,%s,%s,%s,%s,%s,%s,",id,nom,prenom,mail,code_postal,competence,v1);
+        fclose(db1);
+        fclose(db2);
+    }
     
-    char* p1,*p2,*p3;
+    else
+    {
+        char* p1,*p2,*p3;
     char str11[128];
     char tempo[128];
     kk=0;
@@ -321,7 +331,7 @@ void Creer_profil2(char nom[128], char prenom[128], char mail[128], char code_po
         
         if (ll==0)
         {
-            kk=k-2;
+            kk=a-2;
         }
         kk++;
     }
@@ -452,7 +462,10 @@ void Creer_profil2(char nom[128], char prenom[128], char mail[128], char code_po
     fclose(db4);
 
     remove("test/employe.csv");
-    rename("test/tmp.csv","test/employe.csv");    
+    rename("test/tmp.csv","test/employe.csv"); 
+    }
+    
+       
 }
 void Modifier_profil2(char nom[128], char prenom[128], char compe[128], char col[128], char code[128], char entrep[128], int choix)
 {
@@ -2240,8 +2253,10 @@ void Recherche_par_poste2(char nom[128], char prenom[128], int choix)
 
     int zz=0;
     int ii,jj,kk,ll;
+    // Recherche par compétences
     if (choix==1)
     {
+        // identification du profil
         while (zz<nn-1)
         {
             ii=0;jj=0;kk=0;ll=0;ok1=0;
@@ -2277,16 +2292,16 @@ void Recherche_par_poste2(char nom[128], char prenom[128], int choix)
             }
             
             x=0;
+            // recherche du poste du poste qui correspond au profil
             while (x<m-1)
             {
                 a=0;b=0;c=0;d=0;ok2=0;ok3=0;
-                // récupération des données de la table poste
                 fscanf(db1,"%s",str1);
                 v2=strtok(str1,",");
                 v2=strtok(NULL,",");
                 v3=strtok(NULL,",");
                 v4=strtok(NULL,",");
-                
+                // on compte le nombre de compétences du poste
                 while (v3[a]!='\0')
                 {
                     if (v3[a]==';')
@@ -2301,6 +2316,7 @@ void Recherche_par_poste2(char nom[128], char prenom[128], int choix)
                 }
                 int ee;
                 char* v;
+                // cas où le poste ne contient qu'une seule compétence
                 if (b==0)
                 {
                     while (x6[b]!='\0')
@@ -2323,7 +2339,7 @@ void Recherche_par_poste2(char nom[128], char prenom[128], int choix)
                         
                     }    
                 }
-                
+                // cas où le poste contient plusieurs compétences 
                 else
                 {
                     v=strtok(v3,";");
@@ -2375,6 +2391,7 @@ void Recherche_par_poste2(char nom[128], char prenom[128], int choix)
                 
                 e=0;
                 int g,h;
+                // Recherche de l'entreprise qui correspond au poste trouvé précédemment
                 while (e<n-1)
                 {
                     g=0;h=0;ok4=0;
@@ -2395,6 +2412,7 @@ void Recherche_par_poste2(char nom[128], char prenom[128], int choix)
                         ok4=1;
                     }
                     
+                    // si tout est bon , on affiche les résultats
                     if (ok3==1 && ok4==1)
                     {
                         ok++;
@@ -2442,8 +2460,10 @@ void Recherche_par_poste2(char nom[128], char prenom[128], int choix)
         }
     }
     
+    // Recherche par compétences et code postal
     else if (choix==2)
     {
+        // identification du profil
         while (zz<nn-1)
         {
             ii=0;jj=0;kk=0;ll=0;ok1=0;
@@ -2481,6 +2501,8 @@ void Recherche_par_poste2(char nom[128], char prenom[128], int choix)
             
             x=0;
             
+
+            // recherche du poste correpsondant aux compétences du profil
             while (x<m-1)
             {
                 
@@ -2580,6 +2602,7 @@ void Recherche_par_poste2(char nom[128], char prenom[128], int choix)
                 
                 e=0;
                 int g,h;
+                // recherche de l'entreprise qui correspond au poste trouvé précédemment
                 while (e<n-1)
                 {
                     g=0;h=0;ok4=0,ok5=0,ok6=0;
@@ -2615,7 +2638,7 @@ void Recherche_par_poste2(char nom[128], char prenom[128], int choix)
                     {
                     ok6=1;
                     }
-                    
+                    // si tout va bien , on affiche les résultats
                     if (ok5==1 && ok6==1)
                     {
                         ok++;
@@ -2695,9 +2718,10 @@ void Rechercher_par_anciencollegue2(char nom[128], char prenom[128], char entrep
     fscanf(db3,"%*s");
 
     char* v;
+    char tempo[128];
     char* v1,*v3;
     char* y1,*y2;
-    char* w1,*w2,*w3,*w4,*w5;
+    char* w1,*w2,*w3,*w4,*w5,*w6;
     char* x2,*x3,*x4,*x5;
     int e,f,g,h;
     int ok,ok1,ok2,ok3,ok4,ok5,ok7,ok8;
@@ -2705,9 +2729,11 @@ void Rechercher_par_anciencollegue2(char nom[128], char prenom[128], char entrep
     
     e=0;
     ok1=0;
+    // recherche par entreprise
     if (choix==1)
     {
         x=0;ok=0;
+        // identification de l'entreprise
         while (x<b-1)
         {
             y=0;z=0;
@@ -2737,6 +2763,7 @@ void Rechercher_par_anciencollegue2(char nom[128], char prenom[128], char entrep
             
                 
         }
+        // identification du profil
         while (e<c-1 && ok==1)
         {
             f=0;g=0;h=0;
@@ -2749,6 +2776,36 @@ void Rechercher_par_anciencollegue2(char nom[128], char prenom[128], char entrep
             x5=strtok(NULL,",");
             x5=strtok(NULL,",");
             // x6=strtok(NULL,",");
+            int kkk=0;
+            int jjj=0;
+            // gestion de l'attibut collègues de la table employe
+            while (kkk<strlen(tempo))
+            {
+                if (tempo[kkk]==',')
+                {
+                    jjj++;
+                    kkk++;
+                    if (jjj==6)
+                    {
+                        // cas l'attribut ne contient aucune donnée
+                        if (tempo[kkk-1]==',' && tempo[kkk]=='\0')
+                        {
+                            x5="";
+                        }
+                            
+                        // cas l'attribut ne contient au moins une donnée donnée
+                        else
+                        {
+                            x5=strtok(NULL,",");
+                        }                    
+                    }
+                        
+                }
+                else
+                {
+                    kkk++;
+                }
+            }
 
             while (x2[f]==nom[f] && x2[f]!='\0' && nom[f]!='\0')
             {
@@ -2765,7 +2822,6 @@ void Rechercher_par_anciencollegue2(char nom[128], char prenom[128], char entrep
             {
                 ok1++;
                 strcpy(coll,x5);
-                // strcpy(entrep,x6);
                 pos=e;
                 e=c-1;
             }
@@ -2778,6 +2834,7 @@ void Rechercher_par_anciencollegue2(char nom[128], char prenom[128], char entrep
             fseek(db3,0,SEEK_SET);
             fscanf(db3,"%*s");
             ok2=0;
+            // recherche des profils qui travaillent pour la même entreprise trouvée juste avant
             while (i<c-2 && ok1!=0)
             {
                 j=0;k=0;l=0;ok3=0;
@@ -2787,17 +2844,70 @@ void Rechercher_par_anciencollegue2(char nom[128], char prenom[128], char entrep
                 }
                 
                 fscanf(db3,"%s",str3);
+                strcpy(tempo,str3);
                 w1=strtok(str3,",");
                 w2=strtok(NULL,",");
                 w3=strtok(NULL,",");
                 w4=strtok(NULL,",");
                 w5=strtok(NULL,",");
                 w5=strtok(NULL,",");
-                w5=strtok(NULL,",");
-                w5=strtok(NULL,",");
-                while (identrep[j]!='\0')
+                int jjj=0;
+                int kkk=0;
+                
+                // gestion des attributs collegies et entreprise
+                while (kkk<strlen(tempo))
                 {
-                    if (identrep[j]==w5[k])
+                    if (tempo[kkk]==',')
+                    {
+                        jjj++;
+                        kkk++;
+                        if (jjj==6)
+                        {
+                            // cas où l'attribut collegue ne contient aucune donnée
+                            if (tempo[kkk]==',' && tempo[kkk+1]!='\0')
+                            {
+                                w6=strtok(NULL,",");
+                                w5="";
+                            }
+                            // cas où les attributs collegue et entrepise ne contiennent aucune donnée
+                            else if (tempo[kkk]==',' && tempo[kkk+1]=='\0')
+                            {
+                                w6="";
+                                w5="";
+                            }
+                            // cas où l'attribut collegues contient au moins une donnée et l'attribut entreprise contient aussi une donnée 
+                            // ou bien l'attribut collegues contient au moins une donnée et l'attribut entreprise ne contient aucune donnée           
+                            else
+                            {
+                                int ff;
+                                char cc;
+                                w5=strtok(NULL,",");
+                                ff=kkk+strlen(w5)+1;
+                                cc=tempo[ff];
+                                // cas où l'attribut entreprise ne contient aucune donnée
+                                if (cc=='\0')
+                                {
+                                    w6="";
+                                }
+                                // cas où l'attribut entreprise contient une donnée
+                                else
+                                {
+                                    w6=strtok(NULL,",");
+                                }                
+                            }                
+                        }
+                                
+                    }
+                    else
+                    {
+                        kkk++;
+                    }
+                            
+                }
+                // vérifier si l'id de l'entreprise correspond à l'attribut entreprise du profil
+                while (identrep[j]!='\0' && strlen(w6))
+                {
+                    if (identrep[j]==w6[k])
                     {
                         j++;
                         k++;
@@ -2810,13 +2920,14 @@ void Rechercher_par_anciencollegue2(char nom[128], char prenom[128], char entrep
                         l=0;
                     }
                     
-                    if (l==strlen(w5))
+                    if (l==strlen(w6))
                     {
                         ok3=1;
                     }
                     
                 }
                 j=0;k=0;l=0;
+                // on vérifie si ce profil est un collègue de la personne qui effectue la recherche
                 while (coll[j]!='\0')
                 {
                 if (coll[j]==w1[k])
@@ -2831,7 +2942,8 @@ void Rechercher_par_anciencollegue2(char nom[128], char prenom[128], char entrep
                     k=0;
                     l=0;
                 }
-                if (l==strlen(w1))
+                // si tout est bon on affiche des informations sur le collègue
+                if (l==strlen(w1) && ok3==1)
                 {
                         ok2++;
                         if (ok2==1 && ok3==1)
@@ -2870,20 +2982,53 @@ void Rechercher_par_anciencollegue2(char nom[128], char prenom[128], char entrep
         }
     }
     
+    // recherche par compétences
     else if (choix==2)
     {
+        // identification du profil
         while (e<c-1)
         {
             f=0;g=0;h=0;
             fscanf(db3,"%s",str3);
+            strcpy(tempo,str3);
             x2=strtok(str3,",");
             x2=strtok(NULL,",");
             x3=strtok(NULL,",");
             x4=strtok(NULL,",");
             x4=strtok(NULL,",");
             x4=strtok(NULL,",");
-            x5=strtok(NULL,",");
-            // x6=strtok(NULL,",");
+            int kkk=0;
+            int jjj=0;
+            // gestion de l'attibut collègues de la table employe
+            while (kkk<strlen(tempo))
+            {
+                if (tempo[kkk]==',')
+                {
+                    jjj++;
+                    kkk++;
+                    if (jjj==6)
+                    {
+                        // cas l'attribut ne contient aucune donnée
+                        if (tempo[kkk-1]==',' && tempo[kkk]=='\0')
+                        {
+                            x5="";
+                        }
+                            
+                        // cas l'attribut ne contient au moins une donnée donnée
+                        else
+                        {
+                            x5=strtok(NULL,",");
+                        }
+                        
+                            
+                    }
+                    
+                }
+                else
+                {
+                    kkk++;
+                }
+            }
 
             while (x2[f]==nom[f] && x2[f]!='\0' && nom[f]!='\0')
             {
@@ -2912,6 +3057,7 @@ void Rechercher_par_anciencollegue2(char nom[128], char prenom[128], char entrep
 
             int i,j,k,l,m,n,o,p;
             i=0;ok=0;
+            // recherche des postes dont les compétences corresponsent aux compétences du profil qui effectue la recherche
             while (i<a-1 && ok1!=0)
             {
                 j=0;k=0;l=0;m=0;ok4=0;ok5=0;
@@ -2919,7 +3065,7 @@ void Rechercher_par_anciencollegue2(char nom[128], char prenom[128], char entrep
                 v1=strtok(str1,",");
                 v3=strtok(NULL,",");
                 v3=strtok(NULL,",");
-
+                // calcul de nombre de compétences associés au poste
                 while (v3[j]!='\0')
                 {
                     if (v3[j]==';')
@@ -2933,6 +3079,7 @@ void Rechercher_par_anciencollegue2(char nom[128], char prenom[128], char entrep
                     }    
                 }
                 j=0;
+                // cas où le poste ne contient qu'une seule compétences
                 if (k==0)
                 {
                     while (compe[j]!='\0')
@@ -2957,7 +3104,7 @@ void Rechercher_par_anciencollegue2(char nom[128], char prenom[128], char entrep
                     }
         
                 }
-
+                // cas où le poste contient plusieurs compétences
                 else
                 {
                     v=strtok(v3,";");
@@ -3011,6 +3158,7 @@ void Rechercher_par_anciencollegue2(char nom[128], char prenom[128], char entrep
                 int q,r,s,t;
                 q=0;
                 ok8=0;
+                // recherche des collègues qui travaillent pour l'entreprise qui est à la recherche du poste trouvé juste avant
                 while (q<c-2 && ok5==1)
                 {
                     r=0;s=0;t=0;ok7=0;
@@ -3020,39 +3168,70 @@ void Rechercher_par_anciencollegue2(char nom[128], char prenom[128], char entrep
                     }
                     
                     fscanf(db3,"%s",str3);
+                    strcpy(tempo,str3);
                     w1=strtok(str3,",");
                     w2=strtok(NULL,",");
                     w3=strtok(NULL,",");
                     w4=strtok(NULL,",");
                     w5=strtok(NULL,",");
                     w5=strtok(NULL,",");
-                    w5=strtok(NULL,",");
-                    w5=strtok(NULL,",");
-                    // while (entrep[r]!='\0')
-                    // {
-                    //     if (entrep[r]==w5[s])
-                    //     {
-                    //         r++;
-                    //         s++;
-                    //         t++;
-                    //     }
-                    //     else
-                    //     {
-                    //         r++;
-                    //         s=0;
-                    //         t=0;
-                    //     }
-                        
-                    //     if (t==strlen(w5))
-                    //     {
-                    //         ok6=1;
-                    //     }
-                        
-                    // }
-                    // r=0;s=0;t=0;
-                    while (w5[r]!='\0')
+                    int jjj=0;
+                    int kkk=0;
+                    
+                    // gestion des attributs collegies et entreprise
+                    while (kkk<strlen(tempo))
                     {
-                        if (w5[r]==v1[s])
+                        if (tempo[kkk]==',')
+                        {
+                            jjj++;
+                            kkk++;
+                            if (jjj==6)
+                            {
+                                // cas où l'attribut collegue ne contient aucune donnée
+                                if (tempo[kkk]==',' && tempo[kkk+1]!='\0')
+                                {
+                                    w6=strtok(NULL,",");
+                                    w5="";
+                                }
+                                // cas où les attributs collegue et entrepise ne contiennent aucune donnée
+                                else if (tempo[kkk]==',' && tempo[kkk+1]=='\0')
+                                {
+                                    w6="";
+                                    w5="";
+                                }
+                                // cas où l'attribut collegues contient au moins une donnée et l'attribut entreprise contient aussi une donnée 
+                                // ou bien l'attribut collegues contient au moins une donnée et l'attribut entreprise ne contient aucune donnée           
+                                else
+                                {
+                                    int ff;
+                                    char cc;
+                                    w5=strtok(NULL,",");
+                                    ff=kkk+strlen(w5)+1;
+                                    cc=tempo[ff];
+                                    // cas où l'attribut entreprise ne contient aucune donnée
+                                    if (cc=='\0')
+                                    {
+                                        w6="";
+                                    }
+                                    // cas où l'attribut entreprise contient une donnée
+                                    else
+                                    {
+                                        w6=strtok(NULL,",");
+                                    }                
+                                }                
+                            }
+                                    
+                        }
+                        else
+                        {
+                            kkk++;
+                        }
+                                
+                    }
+
+                    while (w6[r]!='\0')
+                    {
+                        if (w6[r]==v1[s])
                         {
                             r++;
                             s++;
@@ -3072,6 +3251,7 @@ void Rechercher_par_anciencollegue2(char nom[128], char prenom[128], char entrep
                         
                     }
                     r=0;s=0;l=0;
+                    // on vérifie si ce profil est collègue avec la personne qui effectue la recherche
                     while (coll[r]!='\0')
                     {
                         if (coll[r]==w1[s])
@@ -3086,7 +3266,8 @@ void Rechercher_par_anciencollegue2(char nom[128], char prenom[128], char entrep
                             s=0;
                             l=0;
                         }
-                        if (l==strlen(w1))
+                        // si tout est bon on affiche des informations sur le collègue
+                        if (l==strlen(w1) && ok7==1)
                         {
                             ok8++;
                             if (ok8==1 && ok7==1)
@@ -3103,14 +3284,6 @@ void Rechercher_par_anciencollegue2(char nom[128], char prenom[128], char entrep
                                 printf("---------------------------------------------\n");
                             }
                             
-                            // if (ok7==1 && ok8>0 && ok6==1)
-                            // {
-                            //     printf("Nom du (de la) collègue:%s\n",w2);
-                            //     printf("Prénom du (de la) collègue:%s\n",w3);
-                            //     printf("Adresse mail du (de la) collègue:%s\n",w4);
-                            //     printf("Actuellement cette personne travail pour la même entreprise que vous\n");
-                            //     printf("---------------------------------------------\n");
-                            // }
                         }
                         k=0;l=0;    
                         
@@ -3129,7 +3302,7 @@ void Rechercher_par_anciencollegue2(char nom[128], char prenom[128], char entrep
                 }
                 
             }
-            if (e==c-1 && ok==0) //???????
+            if (e==c-1 && ok==0)
             {
                 printf("Nous n'avons pas pu trouver des résultats pour votre recherche\n");
             }
