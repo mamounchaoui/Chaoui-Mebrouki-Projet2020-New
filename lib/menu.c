@@ -9,6 +9,7 @@ void menuEnt(void);
 void menuPrincipal(void);
 void choixRecherche(void);
 void menuEmploye(void);
+void menuChercheurEmploi(void);
 
 void menuEnt(void){
      char choisir;
@@ -210,7 +211,7 @@ void choixRecherche(void){
 
 void menuPrincipal(void){
      char choix1;
-     char choisir=' ';
+     char debug=' ';
      printf("\n");
      printf("---------------- Bienvenue sur LuminIn ----------------\n");
 
@@ -226,13 +227,15 @@ void menuPrincipal(void){
 
      choix1 = getchar();
      switch(choix1){ 
-          case '1' : choisir = getchar(); printf("%c", choisir); // ca bug donc je fais ca
+          case '1' : debug = getchar(); printf("%c", debug); // ca bug donc je fais ca
                     menuEnt();
                     break;
-          case '2' : choisir = getchar(); printf("%c", choisir); // ca bug donc je fais ca
+          case '2' : debug = getchar(); printf("%c", debug); // ca bug donc je fais ca
                     menuEmploye();
                     break;
-          case '3' : break;
+          case '3' : debug = getchar(); printf("%c", debug); 
+                    menuChercheurEmploi();
+                    break;
           case 'q' : printf("FERMETURE ... \n"); break;
     }
 
@@ -281,7 +284,7 @@ void menuEmploye(void){
                     scanf("%s",code_postal);
                     printf("Les compétences de l'employé (séparez les différentes compétences par des ;) : \n ");
                     scanf("%s",competence);
-                    printf("Le collegue de l'employé : \n ");
+                    printf("Le nom et prénom du collegue de l'employé : \n ");
                     scanf("%s",collegue);
                     printf("L'entreprise de l'employé : \n ");
                     scanf("%s",entreprise);
@@ -393,6 +396,151 @@ void menuEmploye(void){
 
 }
 
+void menuChercheurEmploi(void){
+     char choix1;
+     int choix2;
+     char debug=' ';
+
+     char nom[128] = {0};
+     char prenom[128]= {0};
+     char mail[128]= {0};
+     char code_postal[128]= {0};
+     char competence[128]= {0}; 
+     char collegue[128]= {0}; 
+     char entreprise[128]= {0};
+
+     printf("\n");
+     printf("----------------------------------------------------\n");
+     printf("-------------- Menu Chercheur d'emploi -------------\n");
+     printf("----------------------------------------------------\n");
+
+
+     printf("Vous voulez :\n");
+     printf("1. Créer un profil \n");
+     printf("2. Modifier un profil \n");
+     printf("3. Transitionner le profil de «chercheur d'emploi» à un profil «employé» \n");
+     printf("4. Supprimer un profil \n");
+     printf("5. Rechercher parmi les les postes à pourvoir qui correspondent à son profil\n");
+     printf("6. Rechercher parmi les anciens collègues \n");
+     printf("\n");
+     printf("Votre choix ('q' pour quitter, 'p' pour menu précédent) : \n");
+
+     choix1 = getchar();
+     switch(choix1){ 
+          case '1' : printf("Entrez les données suivantes : \n");
+                    printf("Le nom du chercheur d'emploi : \n ");
+                    scanf("%s",nom);
+                    printf("Le Prénom du chercheur d'emploi : \n ");
+                    scanf("%s",prenom);
+                    printf("L'adresse mail du chercheur d'emploi : \n ");
+                    scanf("%s",mail);
+                    printf("Le code postal du chercheur d'emploi : \n ");
+                    scanf("%s",code_postal);
+                    printf("Les compétences du chercheur d'emploi (séparez les différentes compétences par des ;) : \n ");
+                    scanf("%s",competence);
+                    printf("Le nom et prénom du collegue du chercheur d'emploi : \n ");
+                    scanf("%s",collegue);
+                    printf("L'entreprise du chercheur d'emploi : \n ");
+                    scanf("%s",entreprise);
+                    Creer_profil(nom,prenom,mail,code_postal,competence,collegue);
+                    break;
+
+          case '2' : printf("Vous voulez :\n");
+                    printf("1. Ajouter des compétences \n");
+                    printf("2. Ajouter un(e) ancien(ne) collègue de travail \n");
+                    printf("3. Modifier le code postal \n");
+                    scanf("%d",&choix2);
+                    switch(choix2){
+                         case 1:   printf("Entrez le nom du profil à modifier: \n ");
+                                   scanf("%s",nom);
+                                   printf("Entrez le prénom du profil à modifier: \n ");
+                                   scanf("%s",prenom);
+                                   printf("Entrez la compétence à ajouter: \n ");
+                                   scanf("%s",competence);
+                                   Modifier_profil(nom,prenom,competence,"defaut","defaut",1);
+                                   break;
+                         case 2:   printf("Entrez le nom du profil à modifier: \n ");
+                                   scanf("%s",nom);
+                                   printf("Entrez le prénom du profil à modifier: \n ");
+                                   scanf("%s",prenom);
+                                   printf("Entrez le nom et prénom du collègue à ajouter(ex : nom,prenom ): \n ");
+                                   scanf("%s",collegue);
+                                   Modifier_profil(nom,prenom,"defaut",collegue,"defaut",2);
+                                   break;
+                         case 3:   printf("Entrez le nom du profil à modifier: \n ");
+                                   scanf("%s",nom);
+                                   printf("Entrez le prénom du profil à modifier: \n ");
+                                   scanf("%s",prenom);
+                                   printf("Entrez le nouveau code postal : \n ");
+                                   scanf("%s",code_postal);
+                                   Modifier_profil(nom,prenom,"defaut","defaut",code_postal,3);
+                                   break;
+                         default:  printf("Erreur de saisie !");
+                    }
+                    break;
+
+          case '3' : printf("Entrez le nom du profil à transitionner: \n ");
+                    scanf("%s",nom);
+                    printf("Entrez le prénom du profil à transitionner: \n ");
+                    scanf("%s",prenom); 
+                    printf("Entrez l'entreprise à transitionner: \n ");
+                    scanf("%s",entreprise);  
+                    Transitionner_profil(nom,prenom,entreprise);
+                    break;
+          case '4' : printf("Entrez le nom du profil à supprimer: \n ");
+                    scanf("%s",nom);
+                    printf("Entrez le prénom du profil à supprimer: \n ");
+                    scanf("%s",prenom);  
+                    Supprimer_profil(nom,prenom);
+                    break;
+          case '5' : printf("Vous voulez :\n");
+                    printf("1. Rechercher par compétences \n");
+                    printf("2. Rechercher par compétences et code postal \n");
+                    scanf("%d",&choix2);
+                    switch(choix2){
+                         case 1:   printf("Entrez le nom du profil qui effectue la recherche: \n ");
+                                   scanf("%s",nom);
+                                   printf("Entrez le prénom du profil qui effectue la recherche: \n ");
+                                   scanf("%s",prenom);
+                                   Recherche_par_poste(nom,prenom,1);
+                                   break;
+                         case 2:    printf("Entrez le nom du profil qui effectue la recherche: \n ");
+                                   scanf("%s",nom);
+                                   printf("Entrez le prénom du profil qui effectue la recherche: \n ");
+                                   scanf("%s",prenom);
+                                   Recherche_par_poste(nom,prenom,2);
+                                   break;
+                         default:  printf("Erreur de saisie !");break;
+                    }
+                    break;
+          case '6' : printf("Vous voulez :\n");
+                    printf("1. Rechercher par entreprise \n");
+                    printf("2. Rechercher par compétences \n");
+                    scanf("%d",&choix2);
+                    switch(choix2){
+                         case 1:   printf("Entrez le nom du profil: \n ");
+                                   scanf("%s",nom);
+                                   printf("Entrez le prénom du profil : \n ");
+                                   scanf("%s",prenom);
+                                   printf("Entrez le nom de l'entreprise : \n ");
+                                   scanf("%s",entreprise);
+                                   Rechercher_par_anciencollegue(nom,prenom,entreprise,1);
+                                   break;
+                         case 2:    printf("Entrez le nom du profil qui effectue la recherche: \n ");
+                                   scanf("%s",nom);
+                                   printf("Entrez le prénom du profil qui effectue la recherche: \n ");
+                                   scanf("%s",prenom);
+                                   Rechercher_par_anciencollegue(nom,prenom,"defaut",2);
+                                   break;
+                         default:  printf("Erreur de saisie !");break;
+                    }
+                    break;
+          case 'p' :printf("Retour au menu précédent \n"); debug = getchar(); printf("%c", debug);
+                    menuPrincipal(); break;
+          case 'q' : printf("FERMETURE ... \n"); break;
+    }
+
+}
 
 int main()
 {    
