@@ -80,6 +80,7 @@ if(nbr != 0){
         l++;
     }
 }
+
     fclose(fic);
     fclose(new);
     remove("test/entreprise.csv");
@@ -128,7 +129,7 @@ int supprimer_poste(FILE* fic, int indexEnt, char* titre)
         return 0;
     FILE * new = fopen("test/replique.csv","w");
     char chunk[128]= {0};
-    int i=0,j=0,nbrVir=0,Verif=0,conversion,retour=0;
+    int i=0,j=0,nbrVir=0,Verif=0,conversion,retour=0,ligne=0;
     char num[128] = {0};
     char nomposte[128] = {0};
 
@@ -174,12 +175,12 @@ int supprimer_poste(FILE* fic, int indexEnt, char* titre)
         if(Verif != 2){
             fputs(chunk,new);
         }
+        
         if(Verif == 2){
             retour = 1;
         }
-        nbrVir =0; i=0; j=0; Verif =0;
+        nbrVir =0; i=0; j=0; Verif =0; ligne++;
     }
-
     fclose(fic);
     fclose(new);
     remove("test/poste.csv");
@@ -226,8 +227,10 @@ void supprimer_poste_index(FILE* fichier, int indexEnt)
 
     fclose(fichier);
     fclose(new2);
+    
     remove("test/poste.csv");
     rename("test/replique2.csv","test/poste.csv");
+    
 }
 
 int trouver_nom_ent(FILE* fic,char* nomEnt)
@@ -548,4 +551,110 @@ chercheurEmploi* get_emploi(FILE* fic, int indexB){
     tmp->mail=mail1;
     
     return tmp;
+}
+
+
+void get_chercheur(FILE* fic, char* nom,char * prenom, char* retour){
+
+    char chunk[128] ={0};
+    char sol[128] ={0};
+    char Nom1[128] = {0};
+    char Prenom1[128] = {0};
+    int nbrVirgule=0,i=0,j=0,k=0,l=0;
+
+    fseek(fic,0,SEEK_SET);
+    while(fgets(chunk, sizeof(chunk), fic) != NULL) {
+        while(nbrVirgule != 6){
+            while(nbrVirgule == 1){
+                Nom1[j]=chunk[i];
+                i++;j++;
+                if(chunk[i] == ',' ){
+                    nbrVirgule++;i++;
+                }
+            }
+            
+            while(nbrVirgule == 2){
+                Prenom1[k]=chunk[i];
+                i++;k++;
+                if(chunk[i] == ',' ){
+                    nbrVirgule++;i++;
+                }
+            }
+            if(strcmp(nom,Nom1) == 0 && strcmp(prenom,Prenom1) == 0){
+                while(nbrVirgule < 5){
+                    if(chunk[i] == ',' ){
+                        nbrVirgule++;
+                    }
+                    i++;
+                }
+                while(nbrVirgule == 5){
+                    sol[l] = chunk[i];
+                    if(chunk[i] == ',' ){
+                        nbrVirgule++;
+                    }
+                    i++;l++;
+                }
+            }
+            for(int n=0;n<j;n++){
+                Nom1[n]='\0';
+            }
+            for(int n=0;n<k;n++){
+                Prenom1[n]='\0';
+            }
+            if(chunk[i] == ',' ){
+                nbrVirgule++;
+            }
+            
+            i++;
+        }
+        if(nbrVirgule == 6){
+            nbrVirgule = 0;
+            i=0;j=0;k=0;
+        }
+    }
+    strcpy(retour,sol);
+}
+
+
+void update_index(FILE* fic2)
+{
+    char chunk[128]= {0};
+    char copie[128]= {0};
+    int l=0,i=0,flag=0;
+    char num[128] = {0};
+        
+    FILE * new = fopen("test/replique.csv","w");
+    
+    fseek(fic2,0,SEEK_SET);
+
+    while(fgets(chunk, sizeof(chunk), fic2) != NULL)
+    {   
+        if(l==0)
+            fputs(chunk,new);
+        if(l>=1 && flag == 0){
+            while(chunk[i] != ','){
+                sprintf(num,"%d",l);
+                copie[i] = num[i];
+                i++;
+            }
+            while(chunk[i] != '\n'){
+                copie[i]=chunk[i];
+                if(chunk[i] != '\n'){
+                    flag=1;
+                }
+                i++;
+            }
+            copie[i]='\n';
+
+        }
+        fputs(copie,new);
+        for(int j=0;j<i;j++)
+            copie[j]='\0';
+        l++; i=0; flag =0;
+    }
+
+    fclose(fic2);
+    fclose(new);
+    remove("test/poste.csv");
+    rename("test/replique.csv","test/poste.csv");
 }
