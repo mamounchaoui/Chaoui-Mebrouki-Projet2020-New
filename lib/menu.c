@@ -32,8 +32,8 @@ void menuEnt(void){
      printf("1. Créer le profil de votre entreprise \n");
      printf("2. Créer le profil d'un poste à pourvoir \n");
      printf("3. Supprimer le profil d'un poste maintenant pourvu \n");
-     printf("4. Supprimer le profil d'une entreprise \n");
-     printf("5. Faire une recherche parmi les chercheurs d'emploi \n");
+     // printf("5. Supprimer le profil d'une entreprise (fonctionalité supplémentaire ) \n");
+     printf("4. Faire une recherche parmi les chercheurs d'emploi \n");
      printf("\n");
      printf("Votre choix ('q' pour quitter, 'p' pour menu précédent) : \n");
 
@@ -77,6 +77,9 @@ void menuEnt(void){
                     scanf("%s",nomEnt);
                     indexEnt = trouver_nom_ent(fic2,nomEnt);
                     int test = supprimer_poste(fic,indexEnt,titre);
+
+                    FILE* fic3 = fopen("test/poste.csv","r+");
+                    update_index(fic3);
                     if(test == 1){
                          printf("Nous avons supprimé avec succès le poste indiqué ! \n");
                     }
@@ -84,8 +87,8 @@ void menuEnt(void){
                          printf("Erreur : le nom du poste ou le nom de l'entreprise est incorrect ! Vérifiez les MAJs !\n");
                     }
                     break;
-
-          case '4' :printf("Entrez le nom de l'entreprise que vous souhaitez supprimer : \n");
+          /*
+          case '5' :printf("Entrez le nom de l'entreprise que vous souhaitez supprimer : \n");
                     scanf("%s",nomEnt);
 
                     int test4 = supprimer_entreprise(fic2,fic,nomEnt);
@@ -96,7 +99,8 @@ void menuEnt(void){
                          printf("Erreur : le nom de l'entreprise est incorrect ! Vérifiez les MAJs !\n");
                     }
                     break;
-          case '5' : choisir = getchar(); printf("%c", debug2);
+                    */
+          case '4' : choisir = getchar(); printf("%c", debug2);
                     choixRecherche();
                     break;          
           case 'q' : printf("FERMETURE ... \n"); break;
@@ -145,7 +149,7 @@ void choixRecherche(void){
                          break;
                     }
 
-                    printf("%d postes ont été trouvés ! \n",test);
+                    printf("%d poste(s) ont été trouvé(s) ! \n",test);
                     printf("Voici les infos des chercheurs d'emploi qui possèdent cette compétence : \n");
                     printf("------------------ \n");
                     
@@ -167,7 +171,7 @@ void choixRecherche(void){
                          break;
                     }
 
-                    printf("%d postes ont été trouvés ! \n",test2);
+                    printf("%d poste(s) ont été trouvé(s) ! \n",test2);
                     printf("Voici les infos des chercheurs d'emploi qui possèdent cette compétence : \n");
                     printf("------------------ \n");
                     
@@ -189,7 +193,7 @@ void choixRecherche(void){
                          break;
                     }
 
-                    printf("%d postes ont été trouvés ! \n",test3);
+                    printf("%d poste(s) ont été trouvé(s) ! \n",test3);
                     printf("Voici les infos des chercheurs d'emploi qui possèdent ces spécifications : \n");
                     printf("------------------ \n");
                     for(int k=0;k<test3;k++){
