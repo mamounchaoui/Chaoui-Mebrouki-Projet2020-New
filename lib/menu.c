@@ -32,8 +32,8 @@ void menuEnt(void){
      printf("1. Créer le profil de votre entreprise \n");
      printf("2. Créer le profil d'un poste à pourvoir \n");
      printf("3. Supprimer le profil d'un poste maintenant pourvu \n");
-     // printf("5. Supprimer le profil d'une entreprise (fonctionalité supplémentaire ) \n");
      printf("4. Faire une recherche parmi les chercheurs d'emploi \n");
+     printf("5. Supprimer le profil d'une entreprise \n");
      printf("\n");
      printf("Votre choix ('q' pour quitter, 'p' pour menu précédent) : \n");
 
@@ -78,8 +78,8 @@ void menuEnt(void){
                     indexEnt = trouver_nom_ent(fic2,nomEnt);
                     int test = supprimer_poste(fic,indexEnt,titre);
 
-                    FILE* fic3 = fopen("test/poste.csv","r+");
-                    update_index(fic3);
+                    FILE* fichierr = fopen("test/poste.csv","r+");
+                    update_index(fichierr);
                     if(test == 1){
                          printf("Nous avons supprimé avec succès le poste indiqué ! \n");
                     }
@@ -87,11 +87,13 @@ void menuEnt(void){
                          printf("Erreur : le nom du poste ou le nom de l'entreprise est incorrect ! Vérifiez les MAJs !\n");
                     }
                     break;
-          /*
+          
           case '5' :printf("Entrez le nom de l'entreprise que vous souhaitez supprimer : \n");
                     scanf("%s",nomEnt);
 
                     int test4 = supprimer_entreprise(fic2,fic,nomEnt);
+                    FILE* fic6 = fopen("test/poste.csv","r+");
+                    update_index(fic6);
                     if(test4 == 1){
                          printf("Nous avons supprimé avec succès l'entreprise indiqué ! \n");
                     }
@@ -99,7 +101,7 @@ void menuEnt(void){
                          printf("Erreur : le nom de l'entreprise est incorrect ! Vérifiez les MAJs !\n");
                     }
                     break;
-                    */
+                    
           case '4' : choisir = getchar(); printf("%c", debug2);
                     choixRecherche();
                     break;          
@@ -333,7 +335,7 @@ void menuEmploye(void){
                                    scanf("%s",prenom);
                                    printf("Entrez le nouveau nom de l'entreprise : \n ");
                                    scanf("%s",entreprise);
-                                   Modifier_profil2(nom,prenom,competence,"defaut","defaut","defaut",4);
+                                   Modifier_profil2(nom,prenom,"defaut","defaut","defaut",entreprise,4);
                                    break;
                          default:  printf("Erreur de saisie !");
                     }

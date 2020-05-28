@@ -20,22 +20,29 @@ Une entreprise annonce des postes à pourvoir, spécifiant les compétences requ
 Elle peut aussi rechercher parmi les chercheurs d'emploi ceux qui correspondent à ses besoins.
 
 - [ ] Créer un profil
-    - [ ] Nom
+    L'utilisateur devra entrer : 
+    - [ ] Nom ( avec la 1ère lettre en Majuscule)
     - [ ] Code postal
     - [ ] Adresse mail
 - [ ] Supprimer un profil
+        Il suffit d'entrer le nom de l'entreprise pour qu'elle soit supprimé
     - [ ] Supprime automatiquement les postes à pourvoir existant
 - [ ] Créer le profil d'un poste à pourvoir
-    - [ ] Titre
-    - [ ] Compétences requises
+    L'utilisateur devra entrer :
+    - [ ] Titre (le nom du poste)
+    - [ ] Compétences requises ( il faut séparer les compétences par des ;)
 - [ ] Supprimer le profil d'un poste pourvu
+        Il suffit d'entrer le nom du poste à supprimer et l'entreprise de ce poste pour qu'il soit supprimé
 - [ ] Rechercher parmi les chercheurs d'emploi pour des profils qui correspondent à un poste à pourvoir
+    Pour effectuer la recherche l'entreprise doit fournir la compétence recherché et/ou le code postal
     - [ ] Recherche par compétences
     - [ ] Recherche par compétences et code postal
     - [ ] Résultats
         - [ ] Nom
         - [ ] Prénom
         - [ ] Adresse mail
+
+
 
 ## Fonctionalités pour un chercheur d'emploi
 
