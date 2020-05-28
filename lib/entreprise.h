@@ -92,8 +92,14 @@ int trouver_emploi_par_codep(FILE* fic, char* codepp, int emploiTrouve[128]);
 // Objectif : Trouver dans le fichier chercheur demploi un chercheur demploi qui possede la compétence et le code postal
 int trouver_emploi_par_competcode(FILE* fic, char* comp,char* codepos, int emploiTrouve[128]);
 
-//Objectif : Créer une structure chercheur d'emploi à partir d'un index. 
+//Objectif : Retourner une structure chercheur d'emploi à partir d'un index. 
 // Entrée : fic : fichier dans lequel on cherche
 //          indexB : l'index du chercheur d'emploi.
 //Sortie : Structure chercheurEmploi correspondant a l'index donné
 chercheurEmploi* get_emploi(FILE* fic, int indexB);
+
+// Objectif : Obtenir la liste des compétences d'un chercheur d'emploi
+void get_chercheur(FILE* fic, char* nom,char * prenom,char* retour);
+
+// Objectif : Mettre a jour le fichier fourni en paramètre pour les indexs (ne fonctionne que pour poste.csv, à fix si plus de temps)
+void update_index(FILE* fic);
