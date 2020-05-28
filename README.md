@@ -4,7 +4,7 @@
 
 # Table des matières
 
-- [But du programme](#But du programme)
+- [But_du_programme](#But du programme)
 - [Fonctionnalités](#sp%C3%A9cifications-fonctionelles)
     - [Fonctionnalités pour une entreprise](#fonctionalit%C3%A9s-pour-une-entreprise)
     - [Fonctionnalités pour un chercheur d'emploi](#fonctionalit%C3%A9s-pour-un-chercheur-demploi)
@@ -12,7 +12,7 @@
 
 # But du programme
 
-Ce programme est un simulateur de plateforme LinkekIn , elle contient plusieurs fonctionalités qui permettent de mettre en contacts les entreprise , les employés et les chercheurs d'emploi.
+Ce programme est un simulateur de plateforme LinkekIn , elle contient plusieurs fonctionalités qui permettent de mettre en contact les entreprises , les employés et les chercheurs d'emploi.
 
 ## Fonctionalités pour une entreprise
 
