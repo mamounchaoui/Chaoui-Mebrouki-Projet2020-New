@@ -1,45 +1,14 @@
 ![](https://github.com/mamounchaoui/Chaoui-Mebrouki-Projet2020-New/workflows/Test%20master/badge.svg)
 
-# DevCommeLesPros-2020-Projet
 
-Modèle de départ pour le projet de programmation à effectuer en groupe de deux ou trois étudiants.
-Vous n'êtes pas dans l'obligation de garder exactment les mêmes équipes que pour les exercices précédents.
 
 # Table des matières
 
 - [Objectif](#objectif)
-- [Spécifications fonctionelles](#sp%C3%A9cifications-fonctionelles)
-    - [Fonctionalités pour une entreprise](#fonctionalit%C3%A9s-pour-une-entreprise)
-    - [Fonctionalités pour un chercheur d'emploi](#fonctionalit%C3%A9s-pour-un-chercheur-demploi)
-    - [Fonctionalité pour un employé](#fonctionalit%C3%A9-pour-un-employ%C3%A9)
-- [Spécifications de conception](#sp%C3%A9cifications-de-conception)
-    - [Interface](#interface)
-    - [Base de données](#base-de-donn%C3%A9es)
-        - [Table d'entreprise](#table-dentreprise)
-        - [Table de postes](#table-de-postes)
-        - [Table de chercheur d'emploi](#table-de-chercheur-demploi)
-        - [Table des employés](#table-des-employ%C3%A9s)
-    - [Langage de programmation et paramètres de compilateur](#langage-de-programmation-et-param%C3%A8tres-de-compilateur)
-    - [Journal](#journal)
-- [Instructions de travail](#instructions-de-travail)
-    - [Modules/Bibliothèques](#modulesbiblioth%C3%A8ques)
-    - [Tests](#tests)
-        - [Tests unitaires et tests d'intégration](#tests-unitaires-et-tests-dint%C3%A9gration)
-        - [Intégration continue](#int%C3%A9gration-continue)
-    - [Documentation](#documentation)
-        - [Documentation pour les ingénieurs](#documentation-pour-les-ing%C3%A9nieurs)
-        - [Documentation pour les utilisateurs](#documentation-pour-les-utilisateurs)
-    - [Stades de développement](#stades-de-d%C3%A9veloppement)
-        - [Pré-alpha](#pr%C3%A9-alpha)
-        - [Alpha](#alpha)
-        - [Beta](#beta)
-        - [Livraison](#livraison)
-        - [Support et fonctionalités additionelles](#support-et-fonctionalit%C3%A9s-additionelles)
-- [Évaluation](#%C3%A9valuation)
-    - [La base de code](#la-base-de-code)
-    - [L'application](#lapplication)
-    - [La méthode de développement](#la-m%C3%A9thode-de-d%C3%A9veloppement)
-- [Les extras](#les-extras)
+- [Fonctionnalités](#sp%C3%A9cifications-fonctionelles)
+    - [Pour une entreprise](#fonctionalit%C3%A9s-pour-une-entreprise)
+    - [Pour un chercheur d'emploi](#fonctionalit%C3%A9s-pour-un-chercheur-demploi)
+    - [Pour un employé](#fonctionalit%C3%A9-pour-un-employ%C3%A9)
 
 # Objectif
 
