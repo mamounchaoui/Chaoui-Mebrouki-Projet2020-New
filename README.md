@@ -4,7 +4,7 @@
 
 # Table des matières
 
-- [But_du_programme](#But du programme)
+- [But_du_programme](#But-du-programme)
 - [Fonctionnalités](#sp%C3%A9cifications-fonctionelles)
     - [Fonctionnalités pour une entreprise](#fonctionalit%C3%A9s-pour-une-entreprise)
     - [Fonctionnalités pour un chercheur d'emploi](#fonctionalit%C3%A9s-pour-un-chercheur-demploi)
