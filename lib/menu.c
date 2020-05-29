@@ -446,8 +446,6 @@ void menuChercheurEmploi(void){
                     scanf("%s",competence);
                     printf("Le nom et prénom du collegue du chercheur d'emploi : \n ");
                     scanf("%s",collegue);
-                    printf("L'entreprise du chercheur d'emploi : \n ");
-                    scanf("%s",entreprise);
                     Creer_profil(nom,prenom,mail,code_postal,competence,collegue);
                     break;
 
